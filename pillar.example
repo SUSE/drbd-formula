@@ -4,6 +4,7 @@
 drbd:
   global:
     minor_count: 9
+    quorum: "off"
 
   res:
     # DRBD resource name
