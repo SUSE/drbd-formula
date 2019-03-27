@@ -9,9 +9,12 @@ drbd:
     quorum: "off"
 
   #TODO: split the res para to different sec
-  # lack of device/disk/ip/port/node_id
+  # Should not lack any, unless pillar have. 
+  # May  device/disk/ip/port/node_id
   res:
     name: "test"
+    device: "/dev/drbd9"
+    disk: "/dev/vdb"
     meta_disk: "internal"
     protocol: "C"
     ping_timeout: 10
