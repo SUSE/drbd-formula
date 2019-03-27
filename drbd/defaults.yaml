@@ -3,29 +3,35 @@ drbd:
   with_ha: false
 
   global:
-    usage-count: "yes"
-    minor-count: 5
-    dialog-refresh: 1
-    quorum: off
+    usage_count: "yes"
+    minor_count: 5
+    dialog_refresh: 1
+    quorum: "off"
 
   #TODO: split the res para to different sec
   # lack of device/disk/ip/port/node_id
   res:
-    name: test
-    meta-disk: internal
-    protocol: C
-    ping-timeout: 10
-    on-io-error: pass_on
-    resync-rate: 100M
+    name: "test"
+    meta_disk: "internal"
+    protocol: "C"
+    ping_timeout: 10
+    on_io_error: "pass_on"
+    resync_rate: "100M"
 
     # FIXME:
-    node1-name: salt-node1
-    node2-name: salt-node2
-    nodes: []
+    node1_name: "salt-node2"
+    node2_name: "salt-node3"
+    nodes: ["salt-node2", "salt-node3"]
+    node1_ip: "192.168.10.102"
+    node2_ip: "192.168.10.103"
+    node1_port: 7990
+    node2_port: 7990
+    node1_id: 1
+    node2_id: 2
     
 
 cluster:
-  name: hacluster
+  name: "hacluster"
 
 # Note: defaults.yaml in postgresql have map/list. refer - context and - defaults
 # Q: differents between pillar.example and defaults.yaml

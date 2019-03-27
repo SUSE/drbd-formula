@@ -3,47 +3,45 @@
 
 drbd:
   global:
-    minor-count: 9
+    minor_count: 9
 
   res:
     # DRBD resource name
-    name: drbd-test
+    name: "test"
 
     # resource net protocol
-    protocol: C
+    protocol: "C"
 
     # 
-    on-io-error: pass_on
+    on_io_error: "pass_on"
 
     # 
-    device: /dev/drbd9
+    device: "/dev/drbd9"
 
     # 
-    disk: /dev/vdb
+    disk: "/dev/vdb"
 
     # 
-    meta-disk: internal
+    meta_disk: "internal"
 
     #
     ip_port_list:
-      - 192.168.122.101:7910
-      - 192.168.122.102:7910
+      - "192.168.122.101:7910"
+      - "192.168.122.102:7910"
 
-    node1-ip: 192.168.10.101
-    node2-ip: 192.168.10.102
-    node1-port: 7992
-    node2-port: 7992
-    node1-id: 1
-    node2-id: 2
+    node1_ip: "192.168.10.101"
+    node2_ip: "192.168.10.102"
+    node1_port: 7992
+    node2_port: 7992
+    node1_id: 1
+    node2_id: 2
 
-
-    
 
 
 cluster:
   # Cluster name
-  name: hacluster
+  name: "hacluster"
 
   # optional: ntp server
   # ntp: pool.ntp.org
-  ntp: pool.ntp.org
+  ntp: "pool.ntp.org"

@@ -3,7 +3,7 @@
 # feature requests visit http://www.linbit.com
 
 global {
-	usage-count {{ usage-count }};
+	usage-count {{ usage_count }};
 
 	# Decide what kind of udev symlinks you want for "implicit" volumes
 	# (those without explicit volume <vnr> {} block, implied vnr=0):
@@ -13,8 +13,8 @@ global {
 
 	# minor-count dialog-refresh disable-ip-verification
 	# cmd-timeout-short 5; cmd-timeout-medium 121; cmd-timeout-long 600;
-    minor-count	{{ minor-count }};
-    dialog-refresh {{ dialog-refresh }};
+	minor-count	{{ minor_count }};
+	dialog-refresh {{ dialog_refresh }};
 }
 
 common {
