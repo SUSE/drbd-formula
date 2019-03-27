@@ -1,0 +1,24 @@
+resource {{ name }} {
+   device    {{ device }};
+   disk      {{ disk }};
+   meta-disk {{ meta-disk }};
+   net {
+      protocol	{{ protocol }};
+      ping-timeout {{ ping-timeout }};
+   }
+   disk {
+      on-io-error	{{ on-io-error }};
+      resync-rate {{ resync-rate }};
+   }
+   connection-mesh {
+      hosts	{{ node1-name }} {{ node2-name }};
+   }
+   on {{ node1_name }} {
+      address   {{ node1-ip }}:{{ node2-port }};
+      node-id   {{ node1-id }};
+   }
+   on {{ node2_name }} {
+      address   {{ node2-ip }}:{{ node2-port }};
+      node-id   {{ node2-id }};
+   }
+}

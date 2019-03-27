@@ -1,0 +1,31 @@
+drbd:
+  install_packages: true
+  with_ha: false
+
+  global:
+    usage-count: "yes"
+    minor-count: 5
+    dialog-refresh: 1
+    quorum: off
+
+  #TODO: split the res para to different sec
+  # lack of device/disk/ip/port/node_id
+  res:
+    name: test
+    meta-disk: internal
+    protocol: C
+    ping-timeout: 10
+    on-io-error: pass_on
+    resync-rate: 100M
+
+    # FIXME:
+    node1-name: salt-node1
+    node2-name: salt-node2
+    nodes: []
+    
+
+cluster:
+  name: hacluster
+
+# Note: defaults.yaml in postgresql have map/list. refer - context and - defaults
+# Q: differents between pillar.example and defaults.yaml
