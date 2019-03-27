@@ -25,19 +25,19 @@
         node1_id: 1
         node2_id: 2
     - context:
-        name: {{ drbd.res.name }}
-        device: {{ drbd.res.device }}
-        disk: {{ drbd.res.disk }}
-        meta_disk: {{ drbd.res.meta_disk }}
-        protocol:  {{ drbd.res.protocol }}
-        ping_timeout: {{ drbd.res.ping_timeout }}
-        on_io_error: {{ drbd.res.on_io_error }}
-        resync_rate: {{ drbd.res.resync_rate }}
-        node1_name: {{ drbd.res.node1_name }}
-        node2_name: {{ drbd.res.node2_name }}
-        node1_ip: {{ drbd.res.node1_ip }}
-        node2_ip: {{ drbd.res.node2_ip }}
-        node1_port: {{ drbd.res.node1_port }}
-        node2_port: {{ drbd.res.node2_port }}
-        node1_id: {{ drbd.res.node1_id }}
-        node2_id: {{ drbd.res.node2_id }}
+        name: "{{ drbd.res.name }}"
+        device: "{{ drbd.res.device }}"
+        disk: "{{ drbd.res.disk }}"
+        meta_disk: "{{ drbd.res.meta_disk }}"
+        protocol:  "{{ drbd.res.protocol }}"
+        ping_timeout: "{{ drbd.res.ping_timeout }}"
+        on_io_error: "{{ drbd.res.on_io_error }}"
+        resync_rate: "{{ drbd.res.resync_rate }}"
+        node1_name: "{{ drbd.res.node1_name }}"
+        node2_name: "{{ drbd.res.node2_name }}"
+        node1_ip: "{{ drbd.res.node1_ip }}"
+        node2_ip: "{{ drbd.res.node2_ip }}"
+        node1_port: "{{ drbd.res.node1_port }}"
+        node2_port: "{{ drbd.res.node2_port }}"
+        node1_id: "{{ drbd.res.node1_id }}"
+        node2_id: "{{ drbd.res.node2_id }}"
