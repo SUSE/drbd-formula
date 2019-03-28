@@ -1,5 +1,7 @@
 {%- from "drbd/map.jinja" import drbd with context -%}
 
-create-metadata:
+{% for res in drbd.resource %}
+create-metadata-{{ res.name }}:
   cmd.run:
-    - name: drbdadm create-md --force {{ drbd.res.name }}
+    - name: drbdadm create-md --force {{ res.name }}
+{% endfor %}
