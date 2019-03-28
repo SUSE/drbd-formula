@@ -1,6 +1,7 @@
 drbd:
   install_packages: true
   with_ha: false
+  res_template: "res_single_vol_v9.j2"
 
   global:
     usage_count: "no"
@@ -12,7 +13,7 @@ drbd:
       quorum: "off"
 
   # newres must have a name
-  # Could test with res name list only only
+  # Could test with res name list only
   resource:
     - name: "test1"
       device: "/dev/drbd8"
@@ -28,7 +29,6 @@ drbd:
       c_max_rate: "100M"
       c_fill_target: "10M"
 
-      # Could calc id automatically
       nodes:
         - name: "salt-node2"
           ip: "192.168.10.102"
@@ -54,7 +54,6 @@ drbd:
       fixed_rate:  True
       resync_rate: "150M"
 
-      # Could calc id automatically
       nodes:
         - name: "salt-node2"
           ip: "192.168.10.102"
@@ -71,7 +70,3 @@ drbd:
 
 cluster:
   name: "hacluster"
-
-# Note: defaults.yaml in postgresql have map/list. refer - context and - defaults
-# Q: differents between pillar.example and defaults.yaml
-#    Use defaults.yaml by default... but could be changed via pillar with node specific value

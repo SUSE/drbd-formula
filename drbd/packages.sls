@@ -1,5 +1,4 @@
 {%- from "drbd/map.jinja" import cluster with context -%}
-#required packages to manage drbd
 
 {% set pattern_available = 1 %}
 {% if grains['os_family'] == 'Suse' %}

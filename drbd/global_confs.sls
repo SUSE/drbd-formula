@@ -2,7 +2,7 @@
 
 /etc/drbd.conf:
   file.managed:
-    - source: salt://drbd/templates/drbd.conf
+    - source: salt://drbd/templates/drbd.conf.j2
     - user: root
     - group: root
     - mode: 644
@@ -13,7 +13,7 @@
 
 /etc/drbd.d/global_common.conf:
   file.managed:
-    - source: salt://drbd/templates/global_common.jinja
+    - source: salt://drbd/templates/global_common.j2
     - user: root
     - group: root
     - mode: 644
