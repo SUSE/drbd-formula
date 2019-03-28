@@ -13,7 +13,7 @@ drbd:
 
   # newres must have a name
   # Could test with res name list only only
-  res:
+  resource:
     - name: "test1"
       device: "/dev/drbd8"
       disk: "/dev/vdb1"

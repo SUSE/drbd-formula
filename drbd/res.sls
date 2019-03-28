@@ -1,8 +1,8 @@
 {%- from "drbd/map.jinja" import drbd with context -%}
 
-{% for res in drbd.res %}
+{% for res in drbd.resource %}
 {% set nodeid = 1 %}
-/etc/drbd.d/{{ res.name|default("test" ~ loop.index) }}.res:
+/etc/drbd.d/{{ res.name }}.res:
   file.managed:
     - source: salt://drbd/templates/res_single_vol_v9.jinja
     - user: root
@@ -10,9 +10,9 @@
     - mode: 644
     - template: jinja
     - defaults:
-        name: '{{ res.name|default("test" ~ loop.index) }}'
-        device: '{{ res.device|default("/dev/drbd" ~ loop.index) }}'
-        disk: '{{ res.disk|default("/dev/vdb" ~ loop.index) }}'
+        name: '{{ res.name }}'
+        device: '{{ res.device|default(["/dev/drbd", loop.index]|join('')) }}'
+        disk: '{{ res.disk|default(["/dev/vdb", loop.index]|join('')) }}'
 
         meta_disk: '{{ res.meta_disk|default("internal") }}'
         protocol:  '{{ res.protocol|default("C") }}'

@@ -6,8 +6,10 @@
     - user: root
     - group: root
     - mode: 644
+    - template: jinja
+    - defaults:
+        resource: {{ drbd.resource }}
 
-    
 
 /etc/drbd.d/global_common.conf:
   file.managed:
