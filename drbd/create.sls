@@ -1,4 +1,4 @@
-{%- from "drbd/map.jinja" import cluster with context -%}
+{%- from "drbd/map.jinja" import drbd with context -%}
 
 create-metadata:
   cmd.run:

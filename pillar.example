@@ -3,6 +3,7 @@
 
 drbd:
   global:
+    usage_count: "no"
     minor_count: 9
     quorum: "off"
 
@@ -27,11 +28,11 @@ drbd:
 
     #
     ip_port_list:
-      - "192.168.122.101:7910"
       - "192.168.122.102:7910"
+      - "192.168.122.103:7910"
 
-    node1_ip: "192.168.10.101"
-    node2_ip: "192.168.10.102"
+    node1_ip: "192.168.10.102"
+    node2_ip: "192.168.10.103"
     node1_port: 7992
     node2_port: 7992
     node1_id: 1
