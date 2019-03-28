@@ -1,0 +1,33 @@
+resource {{ name }} {
+   device    {{ device }};
+   disk      {{ disk }};
+   meta-disk {{ meta_disk }};
+   net {
+      protocol	{{ protocol }};
+      ping-timeout {{ ping_timeout }};
+   }
+   disk {
+      on-io-error	{{ on_io_error }};
+{%- if fixed_rate %}
+      resync-rate	{{ resync_rate }};
+      c-plan-ahead	0;
+{% else %}
+      c-plan-ahead	{{ c_plan_ahead }};
+      c-max-rate	{{ c_max_rate }};
+      c-fill-target	{{ c_fill_target }};
+{% endif -%}
+{{ "   }" }}
+   connection-mesh {
+{% set node_list = [] -%}
+{%- for node in nodes -%}
+  {%- do node_list.append(node.name) -%}
+{%- endfor -%}
+{{ "      hosts	" ~ node_list|join(' ') }};
+   }
+{% for node in nodes -%}
+{{ "   on " ~ node.name }} {
+      address   {{ node.ip ~ ":" ~ node.port }};
+      node-id   {{ node.id }};
+   }
+{% endfor -%}
+}

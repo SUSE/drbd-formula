@@ -11,33 +11,67 @@ drbd:
     options:
       quorum: "off"
 
-  #TODO: split the res para to different sec
-  # Should not lack any, unless pillar have. 
-  # May  device/disk/ip/port/node_id
+  # newres must have a name
+  # Could test with res name list only only
   res:
-    name: "test"
-    device: "/dev/drbd9"
-    disk: "/dev/vdb"
-    meta_disk: "internal"
-    protocol: "C"
-    ping_timeout: 10
-    on_io_error: "pass_on"
-    resync_rate: "100M"
+    - name: "test1"
+      device: "/dev/drbd8"
+      disk: "/dev/vdb1"
+      meta_disk: "internal"
+      protocol: "B"
+      ping_timeout: 10
+      on_io_error: "pass_on"
 
-    # FIXME:
-    node1_name: "salt-node2"
-    node2_name: "salt-node3"
-    nodes: ["salt-node2", "salt-node3"]
-    node1_ip: "192.168.10.102"
-    node2_ip: "192.168.10.103"
-    node1_port: 7990
-    node2_port: 7990
-    node1_id: 1
-    node2_id: 2
+      # Refer to bsc#1101037
+      fixed_rate:  False
+      c_plan_ahead: 20
+      c_max_rate: "100M"
+      c_fill_target: "10M"
+
+      # Could calc id automatically
+      nodes:
+        - name: "salt-node2"
+          ip: "192.168.10.102"
+          port: 7980
+          id: 1
+        - name: "salt-node3"
+          ip: "192.168.10.103"
+          port: 7980
+          id: 2
+        - name: "salt-node4"
+          ip: "192.168.10.104"
+          port: 7980
+          id: 3
     
+    - name: "test2"
+      device: "/dev/drbd9"
+      disk: "/dev/vdb2"
+      meta_disk: "internal"
+      protocol: "C"
+      ping_timeout: 10
+      on_io_error: "detach"
+
+      fixed_rate:  True
+      resync_rate: "150M"
+
+      # Could calc id automatically
+      nodes:
+        - name: "salt-node2"
+          ip: "192.168.10.102"
+          port: 7982
+          id: 1
+        - name: "salt-node3"
+          ip: "192.168.10.103"
+          port: 7982
+          id: 2
+        - name: "salt-node4"
+          ip: "192.168.10.104"
+          port: 7982
+          id: 3
 
 cluster:
   name: "hacluster"
 
 # Note: defaults.yaml in postgresql have map/list. refer - context and - defaults
 # Q: differents between pillar.example and defaults.yaml
+#    Use defaults.yaml by default... but could be changed via pillar with node specific value

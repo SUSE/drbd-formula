@@ -1,43 +1,44 @@
 {%- from "drbd/map.jinja" import drbd with context -%}
 
-/etc/drbd.d/{{ drbd.res.name ~ ".res" }}:
+{% for res in drbd.res %}
+{% set nodeid = 1 %}
+/etc/drbd.d/{{ res.name|default("test" ~ loop.index) }}.res:
   file.managed:
-    - source: salt://drbd/templates/res-single-v9.jinja
+    - source: salt://drbd/templates/res_single_vol_v9.jinja
     - user: root
     - group: root
     - mode: 644
     - template: jinja
     - defaults:
-        name: "test"
-        device: "/dev/drbd9"
-        disk: "/dev/vdb"
-        meta_disk: "internal"
-        protocol:  "C"
-        ping_timeout: 10
-        on_io_error: "pass_on"
-        resync_rate: "100M"
-        node1_name: "salt-node2"
-        node2_name: "salt-node3"
-        node1_ip: "192.168.10.102"
-        node2_ip: "192.168.10.103"
-        node1_port: 7990
-        node2_port: 7990
-        node1_id: 1
-        node2_id: 2
+        name: '{{ res.name|default("test" ~ loop.index) }}'
+        device: '{{ res.device|default("/dev/drbd" ~ loop.index) }}'
+        disk: '{{ res.disk|default("/dev/vdb" ~ loop.index) }}'
+
+        meta_disk: '{{ res.meta_disk|default("internal") }}'
+        protocol:  '{{ res.protocol|default("C") }}'
+        ping_timeout: {{ res.ping_timeout|default(10) }}
+        on_io_error: '{{ res.on_io_error|default("pass_on") }}'
+
+        fixed_rate: {{ res.fixed_rate|default(True) }}
+        resync_rate: '{{ res.resync_rate|default("100M") }}'
+        c_plan_ahead: {{ res.c_plan_ahead|default(20) }}
+        c_max_rate: '{{ res.c_max_rate|default("100M") }}'
+        c_fill_target: '{{ res.c_fill_target|default("10M") }}'
+
+        # To concate string with number, need to use join. Like
+        # name: '{{ ["salt-node", loop.index + 1]|join('') }}'
+        nodes:
+          - name: "salt-node2"
+            ip: "192.168.10.102"
+            port: {{ 7980 + loop.index0 * 2 }}
+            id: {{ nodeid }}
+          - name: "salt-node3"
+            ip: "192.168.10.103"
+            port: {{ 7980 + loop.index0 * 2 }}
+            id: {{ nodeid + 1 }}
+
+{% if res.nodes is defined and res.nodes|length > 0 %}
     - context:
-        name: "{{ drbd.res.name }}"
-        device: "{{ drbd.res.device }}"
-        disk: "{{ drbd.res.disk }}"
-        meta_disk: "{{ drbd.res.meta_disk }}"
-        protocol:  "{{ drbd.res.protocol }}"
-        ping_timeout: "{{ drbd.res.ping_timeout }}"
-        on_io_error: "{{ drbd.res.on_io_error }}"
-        resync_rate: "{{ drbd.res.resync_rate }}"
-        node1_name: "{{ drbd.res.node1_name }}"
-        node2_name: "{{ drbd.res.node2_name }}"
-        node1_ip: "{{ drbd.res.node1_ip }}"
-        node2_ip: "{{ drbd.res.node2_ip }}"
-        node1_port: "{{ drbd.res.node1_port }}"
-        node2_port: "{{ drbd.res.node2_port }}"
-        node1_id: "{{ drbd.res.node1_id }}"
-        node2_id: "{{ drbd.res.node2_id }}"
+        nodes: {{ res.nodes }}
+{% endif %}
+{% endfor %}

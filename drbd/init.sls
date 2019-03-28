@@ -9,7 +9,7 @@ include:
   - .drbd_kmod
   - .global_confs
   - .res
-  - .create
+#  - .create
 {% if drbd.action is defined %}
   - .create
   - .down
