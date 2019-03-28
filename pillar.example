@@ -2,6 +2,10 @@
 # vim: ft=yaml
 
 drbd:
+  install_packages: true
+  with_ha: false
+  res_template: "res_single_vol_v9.j2"
+
   global:
     usage_count: "no"
     minor_count: 9
@@ -10,37 +14,43 @@ drbd:
     options:
       quorum: "off"
 
-  res:
-    # DRBD resource name
-    name: "test"
+  resource:
+    - name: "beijing"
+      device: "/dev/drbd5"
+      disk: "/dev/vdb1"
 
-    # resource net protocol
-    protocol: "C"
+      fixed_rate:  False
+      c_plan_ahead: 20
+      c_max_rate: "100M"
+      c_fill_target: "10M"
 
-    # 
-    on_io_error: "pass_on"
+      nodes:
+        - name: "salt-node2"
+          ip: "192.168.10.102"
+          port: 7990
+          id: 1
+        - name: "salt-node3"
+          ip: "192.168.10.103"
+          port: 7990
+          id: 2
 
-    # 
-    device: "/dev/drbd9"
+    - name: "shanghai"
+      device: "/dev/drbd6"
+      disk: "/dev/vdb2"
+      on_io_error: "detach"
 
-    # 
-    disk: "/dev/vdb"
+      fixed_rate:  True
+      resync_rate: "150M"
 
-    # 
-    meta_disk: "internal"
-
-    #
-    ip_port_list:
-      - "192.168.122.102:7910"
-      - "192.168.122.103:7910"
-
-    node1_ip: "192.168.10.102"
-    node2_ip: "192.168.10.103"
-    node1_port: 7992
-    node2_port: 7992
-    node1_id: 1
-    node2_id: 2
-
+      nodes:
+        - name: "salt-node2"
+          ip: "192.168.10.102"
+          port: 7982
+          id: 1
+        - name: "salt-node3"
+          ip: "192.168.10.103"
+          port: 7982
+          id: 2
 
 
 cluster:
