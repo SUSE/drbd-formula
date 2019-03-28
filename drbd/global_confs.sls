@@ -17,7 +17,7 @@
     - mode: 644
     - template: jinja
     - defaults:
-        usage_count: "yes"
+        usage_count: "no"
         minor_count: 5
         dialog_refresh: 1
         quorum: "off"

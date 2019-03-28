@@ -3,7 +3,7 @@ drbd:
   with_ha: false
 
   global:
-    usage_count: "yes"
+    usage_count: "no"
     minor_count: 5
     dialog_refresh: 1
     quorum: "off"
