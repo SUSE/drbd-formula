@@ -1,6 +1,6 @@
 {%- from "drbd/map.jinja" import drbd with context -%}
 
-/etc/drbd.d/{{ drbd.res.name }}.res:
+/etc/drbd.d/{{ drbd.res.name ~ ".res" }}:
   file.managed:
     - source: salt://drbd/templates/res-single-v9.jinja
     - user: root

@@ -5,7 +5,10 @@ drbd:
   global:
     usage_count: "no"
     minor_count: 9
-    quorum: "off"
+
+  common:
+    options:
+      quorum: "off"
 
   res:
     # DRBD resource name

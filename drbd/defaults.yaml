@@ -6,7 +6,10 @@ drbd:
     usage_count: "no"
     minor_count: 5
     dialog_refresh: 1
-    quorum: "off"
+
+  common:
+    options:
+      quorum: "off"
 
   #TODO: split the res para to different sec
   # Should not lack any, unless pillar have. 

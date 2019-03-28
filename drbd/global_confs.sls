@@ -25,4 +25,4 @@
         usage_count: "{{ drbd.global.usage_count }}"
         minor_count: {{ drbd.global.minor_count }}
         dialog_refresh: {{ drbd.global.dialog_refresh }}
-        quorum: "{{ drbd.global.quorum }}"
+        quorum: "{{ drbd.common.options.quorum }}"
