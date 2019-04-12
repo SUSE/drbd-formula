@@ -1,7 +1,7 @@
 {%- from "drbd/map.jinja" import drbd with context -%}
 
 {% for res in drbd.resource %}
-create-metadata-{{ res.name }}:
-  drbd.initialized:
+start-{{ res.name }}:
+  drbd.started:
     - name: {{ res.name }}
 {% endfor %}

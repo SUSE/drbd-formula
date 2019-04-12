@@ -5,6 +5,7 @@ drbd:
   install_packages: true
   with_ha: false
   res_template: "res_single_vol_v9.j2"
+  promotion: false
 
   global:
     usage_count: "no"

@@ -7,9 +7,9 @@ include:
   - .drbd_kmod
   - .global_confs
   - .res
-  - .create
+  - .initial_sync
 {% if drbd.action is defined %}
+  - .create
+  - .start
   - .down
-  - .remove
-  - .up
 {% endif %}
