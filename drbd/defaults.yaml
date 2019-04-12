@@ -1,8 +1,13 @@
 drbd:
   install_packages: true
   with_ha: false
-  res_template: "res_single_vol_v9.j2"
-  promotion: false
+  stop_after_init_sync: true
+
+  salt:
+    res_template: "res_single_vol_v9.j2"
+    promotion: false
+    sync_interval: 10
+    sync_timeout: 500
 
   global:
     usage_count: "no"
@@ -43,7 +48,7 @@ drbd:
           ip: "192.168.10.104"
           port: 7980
           id: 3
-    
+
     - name: "test2"
       device: "/dev/drbd9"
       disk: "/dev/vdb2"
