@@ -17,7 +17,9 @@ start-{{ res.name }}:
     - name: {{ res.name }}
     - require:
       - create-metadata-{{ res.name }}
+{% endfor %}
 
+{% for res in drbd.resource %}
 {% if drbd.salt.promotion is defined and drbd.salt.promotion is sameas true %}
 promote-{{ res.name }}:
   drbd.promoted:
@@ -25,7 +27,17 @@ promote-{{ res.name }}:
     - force: True
     - require:
       - start-{{ res.name }}
+{% else %}
+sleep-{{ res.name }}:
+  cmd.run:
+    - name: 'sleep 3'
+    - require:
+      - start-{{ res.name }}
+{% endif %}
+{% endfor %}
 
+{% for res in drbd.resource %}
+{% if drbd.salt.promotion is defined and drbd.salt.promotion is sameas true %}
 wait-for-{{ res.name }}-syncsource:
   drbd.wait_for_successful_synced:
     - name: {{ res.name }}
@@ -34,12 +46,6 @@ wait-for-{{ res.name }}-syncsource:
     - require:
       - promote-{{ res.name }}
 {% else %}
-sleep-{{ res.name }}:
-  cmd.run:
-    - name: 'sleep 3'
-    - require:
-      - start-{{ res.name }}
-
 wait-for-{{ res.name }}-synctarget:
   drbd.wait_for_successful_synced:
     - name: {{ res.name }}
@@ -66,7 +72,6 @@ stop-{{ res.name }}:
       - demote-{{ res.name }}
 {% else %}
       - wait-for-{{ res.name }}-synctarget
-{% endif%}
-{% endif%}
-
+{% endif %}
+{% endif %}
 {% endfor %}
