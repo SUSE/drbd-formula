@@ -1,3 +1,6 @@
+# Version
+0.1
+
 # DRBD bootstrap salt formula
 
 Formulas for setup and managing a drbd cluster using drbdadm.
