@@ -1,5 +1,5 @@
 # Version
-0.1
+0.1.0
 
 # DRBD bootstrap salt formula
 
@@ -22,8 +22,8 @@ Enable the configuration and installation of drbd cluster using salt.
 ## Integration with other formulas
 
 * [packages-formula](https://github.com/saltstack-formulas/packages-formula>)
-     
-``` yaml     
+
+``` yaml
      extends:
        packages:
          pkgs:
