@@ -2,14 +2,16 @@
 
 include:
 {% if drbd.install_packages is sameas true %}
-  - .packages
+  - drbd.packages
 {% endif %}
-  - .drbd_kmod
-  - .global_confs
-  - .res
-  - .initial_sync
+  - drbd.drbd_kmod
+  - drbd.global_confs
+  - drbd.res
+{% if drbd.need_init_sync is sameas true %}
+  - drbd.initial_sync
+{% endif %}
 {% if drbd.action is defined %}
-  - .create
-  - .start
-  - .down
+  - drbd.create
+  - drbd.start
+  - drbd.stop
 {% endif %}
