@@ -13,5 +13,7 @@ include:
 {% if drbd.action is defined %}
   - drbd.create
   - drbd.start
+  - drbd.promote
+  - drbd.demote
   - drbd.stop
 {% endif %}
