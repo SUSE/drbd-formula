@@ -11,12 +11,12 @@ resource {{ name }} {
 {%- if fixed_rate %}
       resync-rate	{{ resync_rate }};
       c-plan-ahead	0;
-{% else %}
+{%- else %}
       c-plan-ahead	{{ c_plan_ahead }};
       c-max-rate	{{ c_max_rate }};
       c-fill-target	{{ c_fill_target }};
-{% endif -%}
-{{ "   }" }}
+{%- endif %}
+   }
    connection-mesh {
 {% set node_list = [] -%}
 {%- for node in nodes -%}

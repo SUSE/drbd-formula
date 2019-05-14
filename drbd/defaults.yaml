@@ -18,6 +18,9 @@ drbd:
   common:
     options:
       quorum: "off"
+    net:
+      multi_primaries: ""
+      fencing: ""
 
   # newres must have a name
   # Could test with res name list only

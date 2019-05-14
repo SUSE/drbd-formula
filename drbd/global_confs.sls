@@ -23,8 +23,12 @@
         minor_count: 5
         dialog_refresh: 1
         quorum: "off"
+        multi_primaries: "yes"
+        fencing: "resource-and-stonith"
     - context:
         usage_count: "{{ drbd.global.usage_count }}"
         minor_count: {{ drbd.global.minor_count }}
         dialog_refresh: {{ drbd.global.dialog_refresh }}
         quorum: "{{ drbd.common.options.quorum }}"
+        multi_primaries: "{{ drbd.common.net.multi_primaries }}"
+        fencing: "{{ drbd.common.net.fencing }}"

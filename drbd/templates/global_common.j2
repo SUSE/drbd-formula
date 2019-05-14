@@ -63,5 +63,11 @@ common {
 		# ping-timeout data-integrity-alg tcp-cork on-congestion
 		# congestion-fill congestion-extents csums-alg verify-alg
 		# use-rle fencing
+{%- if multi_primaries %}
+		allow-two-primaries {{ multi_primaries }};
+{%- endif %}
+{%- if fencing %}
+		fencing {{ fencing }};
+{%- endif %}
 	}
 }
