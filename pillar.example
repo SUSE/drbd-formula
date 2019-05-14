@@ -58,12 +58,3 @@ drbd:
           ip: "192.168.10.103"
           port: 7982
           id: 2
-
-
-cluster:
-  # Cluster name
-  name: "hacluster"
-
-  # optional: ntp server
-  # ntp: pool.ntp.org
-  ntp: "pool.ntp.org"

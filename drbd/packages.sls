@@ -1,4 +1,4 @@
-{%- from "drbd/map.jinja" import cluster with context -%}
+{%- from "drbd/map.jinja" import drbd with context -%}
 
 {% set pattern_available = 1 %}
 {% if grains['os_family'] == 'Suse' %}
@@ -21,7 +21,7 @@ install_drbd_packages:
       - drbd-utils
       - yast2-drbd
 
-{% if cluster.with_ha is sameas true %}
+{% if drbd.with_ha is sameas true %}
 install_cluster_packages:
   pkg.installed:
     - pkgs:

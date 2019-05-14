@@ -4,4 +4,3 @@
 {% import_yaml "drbd/defaults.yaml" as defaults %}
 
 {% set drbd = salt['pillar.get']('drbd', default=defaults.drbd, merge=True) %}
-{% set cluster = salt['pillar.get']('cluster', default=defaults.cluster, merge=True) %}

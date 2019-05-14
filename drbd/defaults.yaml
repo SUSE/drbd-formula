@@ -74,6 +74,3 @@ drbd:
           ip: "192.168.10.104"
           port: 7982
           id: 3
-
-cluster:
-  name: "hacluster"
