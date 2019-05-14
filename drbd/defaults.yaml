@@ -2,11 +2,11 @@ drbd:
   install_packages: true
   with_ha: false
   need_init_sync: true
-  stop_after_init_sync: true
+  stop_after_init_sync: false
 
   salt:
     res_template: "res_single_vol_v9.j2"
-    promotion: false
+    promotion: "salt-node2"
     sync_interval: 10
     sync_timeout: 500
 

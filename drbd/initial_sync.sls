@@ -1,4 +1,5 @@
 {%- from "drbd/map.jinja" import drbd with context -%}
+{% set host = grains['host'] %}
 
 {% for res in drbd.resource %}
 stop-{{ res.name }}-if-run:
@@ -20,7 +21,7 @@ start-{{ res.name }}:
 {% endfor %}
 
 {% for res in drbd.resource %}
-{% if drbd.salt.promotion is defined and drbd.salt.promotion is sameas true %}
+{% if drbd.salt.promotion == host %}
 promote-{{ res.name }}:
   drbd.promoted:
     - name: {{ res.name }}
@@ -43,14 +44,14 @@ wait-for-{{ res.name }}-synced:
     - interval: {{ drbd.salt.sync_interval|default(5) }}
     - timeout: {{ drbd.salt.sync_timeout|default(300) }}
     - require:
-{% if drbd.salt.promotion is defined and drbd.salt.promotion is sameas true %}
+{% if drbd.salt.promotion == host %}
       - promote-{{ res.name }}
 {% else %}
       - sleep-{{ res.name }}
 {% endif %}
 
 {% if drbd.stop_after_init_sync is defined and drbd.stop_after_init_sync is sameas true %}
-{% if drbd.salt.promotion is defined and drbd.salt.promotion is sameas true %}
+{% if drbd.salt.promotion == host %}
 demote-{{ res.name }}:
   drbd.demoted:
     - name: {{ res.name }}
@@ -65,7 +66,7 @@ sleep-to-wait-all-before-stop-{{ res.name }}:
   cmd.run:
     - name: 'sleep {{ drbd.salt.sync_interval|default(5) + 3 }}'
     - require:
-{% if drbd.salt.promotion is defined and drbd.salt.promotion is sameas true %}
+{% if drbd.salt.promotion == host %}
       - demote-{{ res.name }}
 {% else %}
       - wait-for-{{ res.name }}-synced

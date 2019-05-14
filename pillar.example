@@ -9,7 +9,7 @@ drbd:
 
   salt:
     res_template: "res_single_vol_v9.j2"
-    promotion: false
+    promotion: "salt-node2"
     sync_interval: 10
     sync_timeout: 500
 
