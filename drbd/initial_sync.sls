@@ -20,6 +20,10 @@ init-start-{{ res.name }}:
       - init-create-metadata-{{ res.name }}
 {% endfor %}
 
+init-extra-sleep:
+  cmd.run:
+    - name: 'sleep 3'
+
 {% for res in drbd.resource %}
 {% if drbd.salt.promotion == host %}
 init-promote-{{ res.name }}:
@@ -27,13 +31,13 @@ init-promote-{{ res.name }}:
     - name: {{ res.name }}
     - force: True
     - require:
-      - init-start-{{ res.name }}
+      - init-extra-sleep
 {% else %}
 init-sleep-{{ res.name }}:
   cmd.run:
     - name: 'sleep 3'
     - require:
-      - init-start-{{ res.name }}
+      - init-extra-sleep
 {% endif %}
 {% endfor %}
 
