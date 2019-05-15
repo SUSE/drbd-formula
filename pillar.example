@@ -2,59 +2,87 @@
 # vim: ft=yaml
 
 drbd:
-  install_packages: true
-  with_ha: false
-  need_init_sync: true
-  stop_after_init_sync: true
+  # install_packages: true
+  # with_ha: false
+  # need_init_sync: true
+  # stop_after_init_sync: true
 
   salt:
-    res_template: "res_single_vol_v9.j2"
     promotion: "salt-node2"
-    sync_interval: 10
-    sync_timeout: 500
+  #   res_template: "res_single_vol_v9.j2"
+  #   sync_interval: 10
+  #   sync_timeout: 500
 
-  global:
-    usage_count: "no"
-    minor_count: 9
+  # global:
+  #   usage_count: "no"
+  #   minor_count: 9
+  #   dialog_refresh: 1
 
-  common:
-    options:
-      quorum: "off"
+  # common:
+  #   options:
+  #     quorum: "off"
+  #   net:
+  #     multi_primaries: ""
+  #     fencing: ""
+  #     after_sb_0pri: ""
+  #     after_sb_1pri: ""
+  #     after_sb_2pri: ""
+  #   handlers:
+  #     fence_peer: ""
+  #     unfence_peer: ""
+  #     before_resync_target: ""
+  #     after_resync_target: ""
+  #     split_brain: ""
 
-  resource:
-    - name: "beijing"
-      device: "/dev/drbd5"
-      disk: "/dev/vdb1"
+  # resource:
+  #   - name: "test1"
+  #     device: "/dev/drbd8"
+  #     disk: "/dev/vdb1"
+  #     meta_disk: "internal"
+  #     protocol: "B"
+  #     ping_timeout: 10
+  #     on_io_error: "pass_on"
 
-      fixed_rate:  False
-      c_plan_ahead: 20
-      c_max_rate: "100M"
-      c_fill_target: "10M"
+  #     fixed_rate:  False
+  #     c_plan_ahead: 20
+  #     c_max_rate: "100M"
+  #     c_fill_target: "10M"
 
-      nodes:
-        - name: "salt-node2"
-          ip: "192.168.10.102"
-          port: 7990
-          id: 1
-        - name: "salt-node3"
-          ip: "192.168.10.103"
-          port: 7990
-          id: 2
+  #     nodes:
+  #       - name: "salt-node2"
+  #         ip: "192.168.10.102"
+  #         port: 7980
+  #         id: 1
+  #       - name: "salt-node3"
+  #         ip: "192.168.10.103"
+  #         port: 7980
+  #         id: 2
+  #       - name: "salt-node4"
+  #         ip: "192.168.10.104"
+  #         port: 7980
+  #         id: 3
 
-    - name: "shanghai"
-      device: "/dev/drbd6"
-      disk: "/dev/vdb2"
-      on_io_error: "detach"
+  #   - name: "test2"
+  #     device: "/dev/drbd9"
+  #     disk: "/dev/vdb2"
+  #     meta_disk: "internal"
+  #     protocol: "C"
+  #     ping_timeout: 10
+  #     on_io_error: "detach"
 
-      fixed_rate:  True
-      resync_rate: "150M"
+  #     fixed_rate:  True
+  #     resync_rate: "150M"
 
-      nodes:
-        - name: "salt-node2"
-          ip: "192.168.10.102"
-          port: 7982
-          id: 1
-        - name: "salt-node3"
-          ip: "192.168.10.103"
-          port: 7982
-          id: 2
+  #     nodes:
+  #       - name: "salt-node2"
+  #         ip: "192.168.10.102"
+  #         port: 7982
+  #         id: 1
+  #       - name: "salt-node3"
+  #         ip: "192.168.10.103"
+  #         port: 7982
+  #         id: 2
+  #       - name: "salt-node4"
+  #         ip: "192.168.10.104"
+  #         port: 7982
+  #         id: 3

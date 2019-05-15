@@ -2,7 +2,7 @@ drbd:
   install_packages: true
   with_ha: false
   need_init_sync: true
-  stop_after_init_sync: false
+  stop_after_init_sync: true
 
   salt:
     res_template: "res_single_vol_v9.j2"
@@ -12,7 +12,7 @@ drbd:
 
   global:
     usage_count: "no"
-    minor_count: 5
+    minor_count: 9
     dialog_refresh: 1
 
   common:
@@ -34,13 +34,9 @@ drbd:
   # newres must have a name
   # Could test with res name list only
   resource:
-    - name: "test1"
-      device: "/dev/drbd8"
+    - name: "beijing"
+      device: "/dev/drbd5"
       disk: "/dev/vdb1"
-      meta_disk: "internal"
-      protocol: "B"
-      ping_timeout: 10
-      on_io_error: "pass_on"
 
       # Refer to bsc#1101037
       fixed_rate:  False
@@ -51,23 +47,16 @@ drbd:
       nodes:
         - name: "salt-node2"
           ip: "192.168.10.102"
-          port: 7980
+          port: 7990
           id: 1
         - name: "salt-node3"
           ip: "192.168.10.103"
-          port: 7980
+          port: 7990
           id: 2
-        - name: "salt-node4"
-          ip: "192.168.10.104"
-          port: 7980
-          id: 3
 
-    - name: "test2"
-      device: "/dev/drbd9"
+    - name: "shanghai"
+      device: "/dev/drbd6"
       disk: "/dev/vdb2"
-      meta_disk: "internal"
-      protocol: "C"
-      ping_timeout: 10
       on_io_error: "detach"
 
       fixed_rate:  True
@@ -82,7 +71,3 @@ drbd:
           ip: "192.168.10.103"
           port: 7982
           id: 2
-        - name: "salt-node4"
-          ip: "192.168.10.104"
-          port: 7982
-          id: 3
