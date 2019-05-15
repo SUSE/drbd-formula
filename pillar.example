@@ -48,28 +48,28 @@ drbd:
   #  # This section is used to fine tune DRBD's properties.
   #  net:
   #    # Optional: you may assign the primary role to both nodes.
-  #    multi_primaries: ""
+  #    multi_primaries: "no"
   #    # Optional: preventive measures to avoid situations where both nodes are primary and disconnected(AKA split brain)
-  #    fencing: ""
+  #    fencing: "resource-and-stonith"
   #    # Optional: split brain handler when no primary
-  #    after_sb_0pri: ""
+  #    after_sb_0pri: "discard-zero-changes"
   #    # Optional: split brain handler when one primary
-  #    after_sb_1pri: ""
+  #    after_sb_1pri: "discard-secondary"
   #    # Optional: split brain handler when two primaries
-  #    after_sb_2pri: ""
+  #    after_sb_2pri: "disconnect"
 
   #  # Define handlers (executables) that are started by the DRBD system in response to certain events.
   #  handlers:
   #    # Optional: This handler is called in case the node needs to fence the peer's disk
-  #    fence_peer: ""
+  #    fence_peer: "/usr/lib/drbd/crm-fence-peer.9.sh"
   #    # Optional: This handler is called in case the node needs to unfence the peer's disk
-  #    unfence_peer: ""
+  #    unfence_peer: "/usr/lib/drbd/crm-unfence-peer.9.sh"
   #    # Optional: This handler is called before a resync begins on the node that becomes resync target.
-  #    before_resync_target: ""
+  #    before_resync_target: "/usr/lib/drbd/snapshot-resync-target-lvm.sh -p 15 -- -c 16k"
   #    # Optional: This handler is called after a resync operation finished on the node.
-  #    after_resync_target: ""
+  #    after_resync_target: "/usr/lib/drbd/unsnapshot-resync-target-lvm.sh"
   #    # Optional: DRBD detected a split brain situation but remains unresolved. This handler should alert someone.
-  #    split_brain: ""
+  #    split_brain: "/usr/lib/drbd/notify-split-brain.sh root"
 
 
   ## Define resources of /etc/drbd.d/xxx
