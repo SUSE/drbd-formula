@@ -9,5 +9,5 @@ demote-{{ res.name }}:
   drbd.demoted:
     - name: {{ res.name }}
     - require:
-      - start-{{ res.name }}
+      - de-start-{{ res.name }}
 {% endfor %}
