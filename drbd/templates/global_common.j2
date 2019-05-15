@@ -33,6 +33,21 @@ common {
 		# before-resync-target "/usr/lib/drbd/snapshot-resync-target-lvm.sh -p 15 -- -c 16k";
 		# after-resync-target /usr/lib/drbd/unsnapshot-resync-target-lvm.sh;
 		# quorum-lost "/usr/lib/drbd/notify-quorum-lost.sh root";
+{%- if fence_peer %}
+                fence-peer "{{ fence_peer }}";
+{%- endif %}
+{%- if unfence_peer %}
+                unfence-peer "{{ unfence_peer }}";
+{%- endif %}
+{%- if before_resync_target %}
+                before-resync-target "{{ before_resync_target }}";
+{%- endif %}
+{%- if after_resync_target %}
+                after-resync-target "{{ after_resync_target }}";
+{%- endif %}
+{%- if split_brain %}
+                split-brain "{{ split_brain }}";
+{%- endif %}
 	}
 
 	startup {
@@ -64,10 +79,19 @@ common {
 		# congestion-fill congestion-extents csums-alg verify-alg
 		# use-rle fencing
 {%- if multi_primaries %}
-		allow-two-primaries {{ multi_primaries }};
+                allow-two-primaries {{ multi_primaries }};
 {%- endif %}
 {%- if fencing %}
-		fencing {{ fencing }};
+                fencing {{ fencing }};
+{%- endif %}
+{%- if after_sb_0pri %}
+                after-sb-0pri {{ after_sb_0pri }};
+{%- endif %}
+{%- if after_sb_1pri %}
+                after-sb-1pri {{ after_sb_1pri }};
+{%- endif %}
+{%- if after_sb_2pri %}
+                after-sb-2pri {{ after_sb_2pri }};
 {%- endif %}
 	}
 }

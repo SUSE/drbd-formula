@@ -21,6 +21,15 @@ drbd:
     net:
       multi_primaries: ""
       fencing: ""
+      after_sb_0pri: ""
+      after_sb_1pri: ""
+      after_sb_2pri: ""
+    handlers:
+      fence_peer: ""
+      unfence_peer: ""
+      before_resync_target: ""
+      after_resync_target: ""
+      split_brain: ""
 
   # newres must have a name
   # Could test with res name list only
