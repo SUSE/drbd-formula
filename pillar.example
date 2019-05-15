@@ -2,87 +2,172 @@
 # vim: ft=yaml
 
 drbd:
-  # install_packages: true
-  # with_ha: false
-  # need_init_sync: true
-  # stop_after_init_sync: true
+  ## Install required package to manage DRBD
+  #install_packages: true
 
+  ## Install required package to configure DRBD in pacemaker cluster
+  #with_ha: false
+
+  ## Perform initial sync for DRBD resources
+  #need_init_sync: true
+
+  ## Optional: stop the DRBD resources after initial resync
+  #stop_after_init_sync: true
+
+
+  # Salt deployment/manage related parameters
   salt:
+    # Pirmary node when promoting DRBD
+    # TODO: Only support single primary currently
     promotion: "salt-node2"
-  #   res_template: "res_single_vol_v9.j2"
-  #   sync_interval: 10
-  #   sync_timeout: 500
+  #  # Resource template for /etc/drbd.d/xxx.res
+  #  res_template: "res_single_vol_v9.j2"
+  #  # Optional: interval check time for waiting for resource synced
+  #  sync_interval: 10
+  #  # Optional: timeout for waiting for resource synced
+  #  sync_timeout: 500
 
-  # global:
-  #   usage_count: "no"
-  #   minor_count: 9
-  #   dialog_refresh: 1
 
-  # common:
-  #   options:
-  #     quorum: "off"
-  #   net:
-  #     multi_primaries: ""
-  #     fencing: ""
-  #     after_sb_0pri: ""
-  #     after_sb_1pri: ""
-  #     after_sb_2pri: ""
-  #   handlers:
-  #     fence_peer: ""
-  #     unfence_peer: ""
-  #     before_resync_target: ""
-  #     after_resync_target: ""
-  #     split_brain: ""
+  ## Configures some "global" parameters of /etc/drbd.d/global_common.conf
+  #global:
+  #  # Optional: Participate in DRBD's online usage counter
+  #  usage_count: "no"
+  #  # Optional: A sizing hint for DRBD to right-size various memory pools.
+  #  minor_count: 9
+  #  # Optional: The user dialog redraws the second count every time seconds
+  #  dialog_refresh: 1
 
-  # resource:
-  #   - name: "test1"
-  #     device: "/dev/drbd8"
-  #     disk: "/dev/vdb1"
-  #     meta_disk: "internal"
-  #     protocol: "B"
-  #     ping_timeout: 10
-  #     on_io_error: "pass_on"
 
-  #     fixed_rate:  False
-  #     c_plan_ahead: 20
-  #     c_max_rate: "100M"
-  #     c_fill_target: "10M"
+  ## Configures some "common" parameters of /etc/drbd.d/global_common.conf
+  #common:
+  #  # This section is used to fine tune the behaviour of the resource object
+  #  options:
+  #    # Optional: Cluster partition requires quorum to modify the replicated data set.
+  #    quorum: "off"
 
-  #     nodes:
-  #       - name: "salt-node2"
-  #         ip: "192.168.10.102"
-  #         port: 7980
-  #         id: 1
-  #       - name: "salt-node3"
-  #         ip: "192.168.10.103"
-  #         port: 7980
-  #         id: 2
-  #       - name: "salt-node4"
-  #         ip: "192.168.10.104"
-  #         port: 7980
-  #         id: 3
+  #  # This section is used to fine tune DRBD's properties.
+  #  net:
+  #    # Optional: you may assign the primary role to both nodes.
+  #    multi_primaries: ""
+  #    # Optional: preventive measures to avoid situations where both nodes are primary and disconnected(AKA split brain)
+  #    fencing: ""
+  #    # Optional: split brain handler when no primary
+  #    after_sb_0pri: ""
+  #    # Optional: split brain handler when one primary
+  #    after_sb_1pri: ""
+  #    # Optional: split brain handler when two primaries
+  #    after_sb_2pri: ""
 
-  #   - name: "test2"
-  #     device: "/dev/drbd9"
-  #     disk: "/dev/vdb2"
-  #     meta_disk: "internal"
-  #     protocol: "C"
-  #     ping_timeout: 10
-  #     on_io_error: "detach"
+  #  # Define handlers (executables) that are started by the DRBD system in response to certain events.
+  #  handlers:
+  #    # Optional: This handler is called in case the node needs to fence the peer's disk
+  #    fence_peer: ""
+  #    # Optional: This handler is called in case the node needs to unfence the peer's disk
+  #    unfence_peer: ""
+  #    # Optional: This handler is called before a resync begins on the node that becomes resync target.
+  #    before_resync_target: ""
+  #    # Optional: This handler is called after a resync operation finished on the node.
+  #    after_resync_target: ""
+  #    # Optional: DRBD detected a split brain situation but remains unresolved. This handler should alert someone.
+  #    split_brain: ""
 
-  #     fixed_rate:  True
-  #     resync_rate: "150M"
 
-  #     nodes:
-  #       - name: "salt-node2"
-  #         ip: "192.168.10.102"
-  #         port: 7982
-  #         id: 1
-  #       - name: "salt-node3"
-  #         ip: "192.168.10.103"
-  #         port: 7982
-  #         id: 2
-  #       - name: "salt-node4"
-  #         ip: "192.168.10.104"
-  #         port: 7982
-  #         id: 3
+  ## Define resources of /etc/drbd.d/xxx
+  #resource:
+  #  # Resource name
+  #  - name: "test1"
+  #    # Define the device name and minor number of a replicated block device.
+  #    device: "/dev/drbd8"
+  #    # Define the lower-level block device that DRBD will use for storing the actual data.
+  #    disk: "/dev/vdb1"
+  #    # Optional: Define where the metadata of a replicated block device resides.
+  #    meta_disk: "internal"
+  #    # Optional: Use the specified protocol on this connection.
+  #    protocol: "B"
+  #    # Optional: Define the timeout for replies to keep-alive packets.
+  #    ping_timeout: 10
+  #    # Optional: Configure how DRBD reacts to I/O errors on a lower-level device.
+  #    on_io_error: "pass_on"
+
+  #    # Optional: Choose "fixed rate" or "variable-rate" synchronization
+  #    fixed_rate:  false
+  #    # Optional: Dynamically control the resync speed.
+  #    c_plan_ahead: 20
+  #    # Optional: Max rate of dynamically resync rate.
+  #    c_max_rate: "100M"
+  #    # Optional: Fill the buffers along the data path with a defined amount of data.
+  #    c_fill_target: "10M"
+
+  #    # Nodes defined in resource "test1"
+  #    nodes:
+  #      # Node name
+  #      - name: "salt-node2"
+  #        # Node IP address
+  #        ip: "192.168.10.102"
+  #        # Node port
+  #        port: 7980
+  #        # Node ID
+  #        id: 1
+  #      # Node name
+  #      - name: "salt-node3"
+  #        # Node IP address
+  #        ip: "192.168.10.103"
+  #        # Node port
+  #        port: 7980
+  #        # Node ID
+  #        id: 2
+  #      # Node name
+  #      - name: "salt-node4"
+  #        # Node IP address
+  #        ip: "192.168.10.104"
+  #        # Node port
+  #        port: 7980
+  #        # Node ID
+  #        id: 3
+
+  #  # Resource name
+  #  - name: "test2"
+  #    # Define the device name and minor number of a replicated block device.
+  #    device: "/dev/drbd9"
+  #    # Define the lower-level block device that DRBD will use for storing the actual data.
+  #    disk: "/dev/vdb2"
+  #    # Optional: Define where the metadata of a replicated block device resides.
+  #    meta_disk: "internal"
+  #    # Optional: Use the specified protocol on this connection.
+  #    protocol: "C"
+  #    # Optional: Define the timeout for replies to keep-alive packets.
+  #    ping_timeout: 10
+  #    # Optional: Configure how DRBD reacts to I/O errors on a lower-level device.
+  #    on_io_error: "detach"
+
+  #    # Optional: Choose "fixed rate" or "variable-rate" synchronization
+  #    fixed_rate:  true
+  #    # Optional: Define how much bandwidth DRBD may use for resynchronizing.
+  #    resync_rate: "150M"
+
+  #    # Nodes defined in resource "test2"
+  #    nodes:
+  #      # Node name
+  #      - name: "salt-node2"
+  #        # Node IP address
+  #        ip: "192.168.10.102"
+  #        # Node port
+  #        port: 7982
+  #        # Node ID
+  #        id: 1
+  #      # Node name
+  #      - name: "salt-node3"
+  #        # Node IP address
+  #        ip: "192.168.10.103"
+  #        # Node port
+  #        port: 7982
+  #        # Node ID
+  #        id: 2
+  #      # Node name
+  #      - name: "salt-node4"
+  #        # Node IP address
+  #        ip: "192.168.10.104"
+  #        # Node port
+  #        port: 7982
+  #        # Node ID
+  #        id: 3

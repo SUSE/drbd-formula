@@ -39,7 +39,7 @@ drbd:
       disk: "/dev/vdb1"
 
       # Refer to bsc#1101037
-      fixed_rate:  False
+      fixed_rate:  true
       c_plan_ahead: 20
       c_max_rate: "100M"
       c_fill_target: "10M"
