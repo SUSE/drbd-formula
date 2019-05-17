@@ -7,9 +7,11 @@
 
 {% if pattern_available == 0 %}
 {% set repo = salt['pkg.info_available']('patterns-ha-ha_sles')['patterns-ha-ha_sles']['repository'] %}
-patterns-ha-ha_sles:
+install-ha-ha_sles-pattern-for-drbd:
   pkg.installed:
     - fromrepo: {{ repo }}
+    - pkgs:
+      - patterns-ha-ha_sles
 
 {% else %}
 
@@ -22,7 +24,7 @@ install_drbd_packages:
       - yast2-drbd
 
 {% if drbd.with_ha is sameas true %}
-install_cluster_packages:
+install_cluster_packages_for_drbd:
   pkg.installed:
     - pkgs:
       - crmsh
