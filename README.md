@@ -12,6 +12,29 @@ usable on other distributions with minor modifications.
 
 Enable the configuration and installation of drbd cluster using salt.
 
+# How to use
+
+1. Copy the [salt-shaptools](https://github.com/SUSE/salt-shaptools) modules and states in our salt master.
+
+```bash
+git clone https://github.com/SUSE/salt-shaptools.git
+# Create /srv/salt/_modules and /srv/salt/_states if they don't exist
+sudo cp salt-shaptools/salt/modules/* /srv/salt/_modules
+sudo cp salt-shaptools/salt/states/* /srv/salt/_states
+```
+
+## Install (Suse distros)
+
+The easiest way to install the formula in SUSE distributions is using a rpm package.
+For that follow the next sequence to install all the dependencies (opensuse leap 15
+is used in the example):
+
+```bash
+sudo zypper addrepo https://download.opensuse.org/repositories/network:ha-clustering:Factory/openSUSE_Leap_15.0/network:ha-clustering:Factory.repo
+sudo zypper ref
+sudo zypper in drbd-formula
+```
+
 ### OPEN QUESTIONS/TODO list
 
  * with pacemaker
@@ -33,3 +56,7 @@ Enable the configuration and installation of drbd cluster using salt.
              - drbd-utils
              - yast2-drbd
 ```
+
+## Known issues:
+* Can't sync salt state running status between nodes.
+  Need to implement DRBD's own approach.
