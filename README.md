@@ -1,3 +1,6 @@
+drbd-formula
+===========
+
 # Version
 0.2.0
 
@@ -60,3 +63,70 @@ sudo zypper in drbd-formula
 ## Known issues:
 * Can't sync salt state running status between nodes.
   Need to implement DRBD's own approach.
+
+
+Available states
+================
+
+.. contents::
+    :local:
+
+``drbd``
+---------------
+
+A full set for load kernel module, write configuration files, initialize resources.
+
+``drbd.drbd_kmod``
+---------------
+
+Load the DRBD kernel module.
+
+``drbd.global_confs``
+---------------
+
+Configure DRBD global configuration file `/etc/drbd.d/global_common.conf` and `/etc/drbd.conf`.
+
+``drbd.res``
+---------------
+
+Configure the DRBD resource configuration files in `/etc/drbd.d/*.res`.
+
+``drbd.create``
+---------------
+
+Create the metadata of all resources, do nothing if existed.
+
+``drbd.createmd_force``
+---------------
+
+Call the DRBD salt module directly to `force` create metadata of all resources.
+
+``drbd.initial_sync``
+---------------
+
+Create the metadata of all resources and run an initialize sync.
+
+``drbd.start``
+---------------
+
+Start all DRBD resources.
+
+``drbd.stop``
+---------------
+
+Stop all DRBD resources.
+
+``drbd.promote``
+---------------
+
+Premote all DRBD resources.
+
+``drbd.demote``
+---------------
+
+Demote all DRBD resources.
+
+``drbd.wait_sync``
+---------------
+
+Waiting all DRBD resources finish syncing.
