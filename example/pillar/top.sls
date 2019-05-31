@@ -1,3 +1,3 @@
 base:
-  'salt-node*':
+  'drbd-node*':
     - drbd.formula

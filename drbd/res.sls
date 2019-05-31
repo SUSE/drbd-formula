@@ -26,14 +26,14 @@
         c_fill_target: '{{ res.c_fill_target|default("10M") }}'
 
         # To concate string with number, need to use join. Like
-        # name: '{{ ["salt-node", loop.index + 1]|join('') }}'
+        # name: '{{ ["drbd-node", loop.index + 1]|join('') }}'
         nodes:
-          - name: "salt-node2"
-            ip: "192.168.10.102"
+          - name: "drbd-node1"
+            ip: "192.168.10.101"
             port: {{ 7980 + loop.index0 * 2 }}
             id: {{ nodeid }}
-          - name: "salt-node3"
-            ip: "192.168.10.103"
+          - name: "drbd-node2"
+            ip: "192.168.10.102"
             port: {{ 7980 + loop.index0 * 2 }}
             id: {{ nodeid + 1 }}
 

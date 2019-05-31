@@ -6,7 +6,7 @@ drbd:
 
   salt:
     res_template: "res_single_vol_v9.j2"
-    promotion: "salt-node2"
+    promotion: "drbd-node1"
     sync_interval: 10
     sync_timeout: 500
 
@@ -45,12 +45,12 @@ drbd:
       c_fill_target: "10M"
 
       nodes:
-        - name: "salt-node2"
-          ip: "192.168.10.102"
+        - name: "drbd-node1"
+          ip: "192.168.10.101"
           port: 7990
           id: 1
-        - name: "salt-node3"
-          ip: "192.168.10.103"
+        - name: "drbd-node2"
+          ip: "192.168.10.102"
           port: 7990
           id: 2
 
@@ -63,11 +63,11 @@ drbd:
       resync_rate: "150M"
 
       nodes:
-        - name: "salt-node2"
-          ip: "192.168.10.102"
+        - name: "drbd-node1"
+          ip: "192.168.10.101"
           port: 7982
           id: 1
-        - name: "salt-node3"
-          ip: "192.168.10.103"
+        - name: "drbd-node2"
+          ip: "192.168.10.102"
           port: 7982
           id: 2

@@ -19,7 +19,7 @@ drbd:
   salt:
     # Pirmary node when promoting DRBD
     # TODO: Only support single primary currently
-    promotion: "salt-node2"
+    promotion: "drbd-node1"
   #  # Resource template for /etc/drbd.d/xxx.res
   #  res_template: "res_single_vol_v9.j2"
   #  # Optional: interval check time for waiting for resource synced
@@ -101,25 +101,25 @@ drbd:
   #    # Nodes defined in resource "test1"
   #    nodes:
   #      # Node name
-  #      - name: "salt-node2"
+  #      - name: "drbd-node1"
   #        # Node IP address
-  #        ip: "192.168.10.102"
+  #        ip: "192.168.10.101"
   #        # Node port
   #        port: 7980
   #        # Node ID
   #        id: 1
   #      # Node name
-  #      - name: "salt-node3"
+  #      - name: "drbd-node2"
   #        # Node IP address
-  #        ip: "192.168.10.103"
+  #        ip: "192.168.10.102"
   #        # Node port
   #        port: 7980
   #        # Node ID
   #        id: 2
   #      # Node name
-  #      - name: "salt-node4"
+  #      - name: "drbd-node3"
   #        # Node IP address
-  #        ip: "192.168.10.104"
+  #        ip: "192.168.10.103"
   #        # Node port
   #        port: 7980
   #        # Node ID
@@ -148,25 +148,25 @@ drbd:
   #    # Nodes defined in resource "test2"
   #    nodes:
   #      # Node name
-  #      - name: "salt-node2"
+  #      - name: "drbd-node1"
   #        # Node IP address
-  #        ip: "192.168.10.102"
+  #        ip: "192.168.10.101"
   #        # Node port
   #        port: 7982
   #        # Node ID
   #        id: 1
   #      # Node name
-  #      - name: "salt-node3"
+  #      - name: "drbd-node2"
   #        # Node IP address
-  #        ip: "192.168.10.103"
+  #        ip: "192.168.10.102"
   #        # Node port
   #        port: 7982
   #        # Node ID
   #        id: 2
   #      # Node name
-  #      - name: "salt-node4"
+  #      - name: "drbd-node3"
   #        # Node IP address
-  #        ip: "192.168.10.104"
+  #        ip: "192.168.10.103"
   #        # Node port
   #        port: 7982
   #        # Node ID
