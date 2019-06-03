@@ -1,6 +1,8 @@
 drbd-formula
 ===========
 
+[![Travis Build](https://api.travis-ci.org/nick-wang/drbd-formula.svg?branch=master)](https://travis-ci.org/nick-wang/drbd-formula)
+
 # Version
 0.2.0
 
@@ -37,32 +39,6 @@ sudo zypper addrepo https://download.opensuse.org/repositories/network:ha-cluste
 sudo zypper ref
 sudo zypper in drbd-formula
 ```
-
-### OPEN QUESTIONS/TODO list
-
- * with pacemaker
- * multiple resources/volumes
- * with lvm
- * with nfs
-
-## Integration with other formulas
-
-* [packages-formula](https://github.com/saltstack-formulas/packages-formula>)
-
-``` yaml
-     extends:
-       packages:
-         pkgs:
-           wanted:
-             - drbd-kmp-default
-             - drbd
-             - drbd-utils
-             - yast2-drbd
-```
-
-## Known issues:
-* Can't sync salt state running status between nodes.
-  Need to implement DRBD's own approach.
 
 
 Available states
