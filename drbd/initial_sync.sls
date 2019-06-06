@@ -32,6 +32,15 @@ init-promote-{{ res.name }}:
     - force: True
     - require:
       - init-extra-sleep
+
+{% if drbd.format_as is defined %}
+format-{{ res.name }}:
+  blockdev.formatted:
+    - name: {{ res.device }}
+    - fs_type: {{ drbd.format_as }}
+    - force: True
+{% endif %}
+
 {% else %}
 init-sleep-{{ res.name }}:
   cmd.run:
@@ -49,7 +58,11 @@ init-wait-for-{{ res.name }}-synced:
     - timeout: {{ drbd.salt.sync_timeout|default(300) }}
     - require:
 {% if drbd.salt.promotion == host %}
+{% if drbd.format_as is defined %}
+      - format-{{ res.name }}
+{% else %}
       - init-promote-{{ res.name }}
+{% endif %}
 {% else %}
       - init-sleep-{{ res.name }}
 {% endif %}
