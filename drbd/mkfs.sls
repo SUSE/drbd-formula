@@ -1,11 +1,11 @@
 {%- from "drbd/map.jinja" import drbd with context -%}
 
 {% for res in drbd.resource %}
-{% if drbd.format_as is defined %}
+{% if drbd.need_format is defined and drbd.need_format is sameas true %}
 format-{{ res.name }}:
   blockdev.formatted:
     - name: {{ res.device }}
-    - fs_type: {{ drbd.format_as }}
+    - fs_type: {{ res.file_system }}
     - force: True
 {% endif %}
 {% endfor %}

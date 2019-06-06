@@ -15,7 +15,7 @@ drbd:
   #stop_after_init_sync: true
 
   ## Optional: format the DRBD resource after initial resync
-  # format_as: "xfs"
+  # need_format: true
 
 
   # Salt deployment/manage related parameters
@@ -101,6 +101,9 @@ drbd:
   #    # Optional: Fill the buffers along the data path with a defined amount of data.
   #    c_fill_target: "10M"
 
+  #    # Optional: (salt) format the disk after initialize
+  #    file_system: "xfs"
+
   #    # Nodes defined in resource "test1"
   #    nodes:
   #      # Node name
@@ -147,6 +150,9 @@ drbd:
   #    fixed_rate:  true
   #    # Optional: Define how much bandwidth DRBD may use for resynchronizing.
   #    resync_rate: "150M"
+
+  #    # Optional: (salt) format the disk after initialize
+  #    file_system: "ext4"
 
   #    # Nodes defined in resource "test2"
   #    nodes:

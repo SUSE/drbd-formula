@@ -44,6 +44,9 @@ drbd:
       c_max_rate: "100M"
       c_fill_target: "10M"
 
+      # Salt specific
+      file_system: "xfs"
+
       nodes:
         - name: "drbd-node1"
           ip: "192.168.10.101"
@@ -61,6 +64,9 @@ drbd:
 
       fixed_rate:  True
       resync_rate: "150M"
+
+      # Salt specific
+      file_system: "ext4"
 
       nodes:
         - name: "drbd-node1"
