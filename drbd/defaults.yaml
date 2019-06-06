@@ -3,6 +3,7 @@ drbd:
   with_ha: false
   need_init_sync: true
   stop_after_init_sync: true
+  need_format: true
 
   salt:
     res_template: "res_single_vol_v9.j2"

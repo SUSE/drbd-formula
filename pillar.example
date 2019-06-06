@@ -15,7 +15,7 @@ drbd:
   #stop_after_init_sync: true
 
   ## Optional: format the DRBD resource after initial resync
-  # need_format: true
+  #need_format: true
 
 
   # Salt deployment/manage related parameters

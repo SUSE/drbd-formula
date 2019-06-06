@@ -37,7 +37,7 @@ init-promote-{{ res.name }}:
 format-{{ res.name }}:
   blockdev.formatted:
     - name: {{ res.device }}
-    - fs_type: {{ res.file_system }}
+    - fs_type: {{ res.file_system|default("ext4") }}
     - force: True
 {% endif %}
 
