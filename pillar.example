@@ -103,6 +103,10 @@ drbd:
 
   #    # Optional: (salt) format the disk after initialize
   #    file_system: "xfs"
+  #    # Optional: (salt) default mount point of the resource
+  #    mount_point: "/mnt/test1"
+  #    # Optional: (salt) default virtual IP of the resource
+  #    virtual_ip: "192.168.10.201"
 
   #    # Nodes defined in resource "test1"
   #    nodes:
@@ -153,6 +157,10 @@ drbd:
 
   #    # Optional: (salt) format the disk after initialize
   #    file_system: "ext4"
+  #    # Optional: (salt) default mount point of the resource
+  #    mount_point: "/mnt/test2"
+  #    # Optional: (salt) default virtual IP of the resource
+  #    virtual_ip: "192.168.10.202"
 
   #    # Nodes defined in resource "test2"
   #    nodes:

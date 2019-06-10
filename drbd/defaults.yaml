@@ -47,6 +47,8 @@ drbd:
 
       # Salt specific
       file_system: "xfs"
+      mount_point: "/mnt/beijing"
+      virtual_ip: "192.168.10.201"
 
       nodes:
         - name: "drbd-node1"
@@ -68,6 +70,8 @@ drbd:
 
       # Salt specific
       file_system: "ext4"
+      mount_point: "/mnt/shanghai"
+      virtual_ip: "192.168.10.202"
 
       nodes:
         - name: "drbd-node1"
