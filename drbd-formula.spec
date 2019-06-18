@@ -42,6 +42,7 @@ DRBD deployment salt formula
 %install
 mkdir -p %{buildroot}/srv/salt/
 cp -R %{fname} %{buildroot}/srv/salt
+cp -R templates/* %{buildroot}/srv/salt/%{fname}/
 
 %files
 %defattr(-,root,root,-)
