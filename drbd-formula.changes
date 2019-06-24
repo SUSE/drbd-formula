@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Mon Jun 24 02:10:29 UTC 2019 - nick wang <nwang@suse.com>
+
+- Version 0.2.2
+  * Support make file system after initialization
+  * Support mount to specific folder
+  * Add habootstrap-formula pillar/tempalte
+
+-------------------------------------------------------------------
 Wed Jun  5 07:26:40 UTC 2019 - nwang@suse.com
 
 - Version 0.2.1
