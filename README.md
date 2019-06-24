@@ -20,6 +20,7 @@ Enable the configuration and installation of drbd cluster using salt.
 # How to use
 
 1. Copy the [salt-shaptools](https://github.com/SUSE/salt-shaptools) modules and states in our salt master.
+   The latest DRBD module/state will be merged into [upstream](https://github.com/saltstack/salt) after `neon` release.
 
 ```bash
 git clone https://github.com/SUSE/salt-shaptools.git
@@ -47,7 +48,7 @@ Available states
 .. contents::
     :local:
 
-``drbd``
+``DRBD``
 ---------------
 
 A full set for load kernel module, write configuration files, initialize resources.
