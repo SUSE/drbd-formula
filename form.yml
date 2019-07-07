@@ -1,0 +1,300 @@
+drbd:
+  $name: DRBD
+  $type: group
+
+  show_more:
+    $name: Advanced
+    $optional: true
+    $type: boolean
+    $help: Show advanced configurations of DRBD
+    $default: false
+
+  install_packages:
+    $optional: true
+    $type: boolean
+    $help: whether need to install DRBD packages first
+    $default: true
+
+  with_ha:
+    $visibleIf: drbd$show_more == true
+    $optional: true
+    $type: boolean
+    $default: false
+
+  need_init_sync:
+    $optional: true
+    $type: boolean
+    $default: true
+
+  stop_after_init_sync:
+    $visibleIf: drbd$show_more == true
+    $optional: true
+    $type: boolean
+    $default: false
+
+  need_format:
+    $visibleIf: drbd$show_more == true
+    $optional: true
+    $type: boolean
+    $help: whether need to format after DRBD initial sync
+    $default: false
+
+  salt:
+    $name: Salt deployment related parameters
+    $type: group
+
+    promotion:
+      $name: Primary node when promoting DRBD
+
+    res_template:
+      $name: Resource template for /etc/drbd.d/xxx.res
+      $optional: true
+      $help: The template for DRBD resources
+      $default: "res_single_vol_v9.j2"
+
+    sync_interval:
+      $optional: true
+      $type: number
+      $default: 10
+
+    sync_timeout:
+      $optional: true
+      $type: number
+      $default: 500
+
+  global:
+    $name: global section of /etc/drbd.d/global_common.conf
+    $optional: true
+    $type: group
+
+    usage_count:
+      $optional: true
+      $type: select
+      $values: ["no",
+                "yes"
+               ]
+      $default: "no"
+
+    minor_count:
+      $optional: true
+      $type: number
+      $default: 9
+
+    dialog_refresh:
+      $optional: true
+      $type: number
+      $default: 1
+
+  common:
+    $name: common section of /etc/drbd.d/global_common.conf
+    $optional: true
+    $type: group
+
+    options:
+      $name: options of common section
+      $optional: true
+      $type: group
+
+      quorum:
+        $optional: true
+        $type: select
+        $values: ["off",
+                  "majority",
+                  "all",
+                 ]
+        $default: "off"
+
+    net:
+      $name: net of common section
+      $optional: true
+      $type: group
+
+      multi_primaries:
+        $name: Use multiple primaries
+        $optional: true
+        $type: select
+        $values: ["no",
+                  "yes"
+                 ]
+        $default: "no"
+
+      fencing:
+        $optional: true
+        $type: select
+        $values: ["dont-care",
+                  "resource-only",
+                  "resource-and-stonith"
+                 ]
+        $default: "resource-and-stonith"
+
+      after_sb_0pri:
+        $optional: true
+        $type: select
+        $values: ["disconnect",
+                  "discard-younger-primary",
+                  "discard-older-primary",
+                  "discard-zero-changes",
+                  "discard-least-changes",
+                  "discard-local",
+                  "discard-remote",
+                 ]
+        $default: "discard-zero-changes"
+
+      after_sb_1pri:
+        $optional: true
+        $type: select
+        $values: ["disconnect",
+                  "consensus",
+                  "violently-as0p",
+                  "discard-secondary",
+                  "call-pri-lost-after-sb",
+                 ]
+        $default: "discard-secondary"
+
+      after_sb_2pri:
+        $optional: true
+        $type: select
+        $values: ["disconnect",
+                  "violently-as0p",
+                  "call-pri-lost-after-sb",
+                 ]
+        $default: "disconnect"
+
+    handlers:
+      $name: handler of common section
+      $optional: true
+      $type: group
+
+      fence_peer:
+        $optional: true
+        $default: "/usr/lib/drbd/crm-fence-peer.9.sh"
+
+      unfence_peer:
+        $optional: true
+        $default: "/usr/lib/drbd/crm-unfence-peer.9.sh"
+
+      before_resync_target:
+        $optional: true
+        $default: "/usr/lib/drbd/snapshot-resync-target-lvm.sh -p 15 -- -c 16k"
+
+      after_resync_target:
+        $optional: true
+        $default: "/usr/lib/drbd/unsnapshot-resync-target-lvm.sh"
+
+      split_brain:
+        $optional: true
+        $default: "/usr/lib/drbd/notify-split-brain.sh root"
+
+  resource:
+    $name: Define resources of /etc/drbd.d/xxx.res
+    $type: edit-group
+    $minItems: 1
+    $itemName: ""
+    $prototype:
+      name:
+        $name: Resource name
+        $placeholder: "testRes"
+
+      device:
+        $name: DRBD device
+        $help: Define the device name and minor number
+        $placeholder: "/dev/drbd1"
+
+      disk:
+        $name: Block device
+        $help: Define the lower-level block device
+        $placeholder: "/dev/vdb1"
+
+      meta_disk:
+        $name: Meta disk
+        $help: Define where the metadata resides
+        $default: "internal"
+
+      protocol:
+        $name: Protocol
+        $help: Specified protocol on this connection
+        $optional: true
+        $type: select
+        $value: ["C",
+                 "B",
+                 "A"
+                ]
+        $default: "C"
+
+      ping_timeout:
+        $name: Ping timeout
+        $help: Define the timeout for replies to keep-alive packets
+        $optional: true
+        $type: number
+        $default: 10
+
+      on_io_error:
+        $name: On IO error
+        $help: DRBD reacts to I/O errors on lower-level device
+        $optional: true
+        $type: select
+        $value: ["pass_on",
+                 "call-local-io-error",
+                 "detach"
+                ]
+        $default: "pass_on"
+
+      fixed_rate:
+        $name: Use fixed sync rate
+        $optional: true
+        $type: boolean
+        $default: true
+
+      resync_rate: 
+        $visibleIf: drbd$resource$fixed_rate == true
+        $name: Fixed sync rate
+        $optional: true
+        $default: "150M"
+
+      c_plan_ahead: 
+        $visibleIf: drbd$resource$fixed_rate == false
+        $name: C plan ahead
+        $help: Dynamically control the resync speed
+        $optional: true
+        $type: number
+        $default: 20
+
+      c_max_rate: 
+        $visibleIf: drbd$resource$fixed_rate == false
+        $name: C max rate
+        $help: Max rate of dynamically resync rate
+        $optional: true
+        $default: "100M"
+
+      c_fill_target:
+        $visibleIf: drbd$resource$fixed_rate == false
+        $name: C fille target
+        $help: Fill the buffers along the data path with a defined amount of data
+        $optional: true
+        $default: "10M"
+
+      file_system:
+        $visibleIf: drbd$need_format == true
+        $name: File system
+        $help: salt format the disk after initialize
+        $optional: true
+        $type: select
+        $value: ["xfs",
+                 "ext3",
+                 "ext4"
+                ]
+        $default: "xfs"
+
+      mount_point:
+        $visibleIf: drbd$need_format == true
+        $name: Mount point
+        $help: Mount point for the resource
+        $optional: true
+        $placeholder: "/mnt/testRes"
+
+     virtual_ip:
+        $visibleIf: drbd$need_format == true && drbd$with_ha == true
+        $name: Virtual IP
+        $help: Virtual IP per resource
+        $optional: true
+        $placeholder: "/mnt/testRes"

@@ -1,0 +1,4 @@
+description:
+  Salt formula to deploy DRBD resources
+group:
+  DRBD deployment
