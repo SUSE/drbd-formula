@@ -1,10 +1,10 @@
 drbd-formula
 ===========
 
-[![Travis Build](https://api.travis-ci.org/nick-wang/drbd-formula.svg?branch=master)](https://travis-ci.org/nick-wang/drbd-formula)
+[![Travis Build](https://api.travis-ci.org/SUSE/drbd-formula.svg?branch=master)](https://travis-ci.org/SUSE/drbd-formula)
 
 # Version
-0.2.2
+0.3.0
 
 # DRBD bootstrap salt formula
 
