@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
 Mon Jul  8 05:31:33 UTC 2019 - nick wang <nwang@suse.com>
 
-- Version 0.3.0 
+- Version 0.3.0, jsc#SLE-6970
   * Move to SUSE org
   * Add SUSE manager support
 
