@@ -59,7 +59,7 @@ mkdir -p %{buildroot}%{fdir}/states/%{fname}
 mkdir -p %{buildroot}%{fdir}/metadata/%{fname}
 cp -R %{fname} %{buildroot}%{fdir}/states
 cp -R templates/* %{buildroot}%{fdir}/states/%{fname}/templates/
-cp -R form.yml metadata.yml %{buildroot}%{fdir}/metadata/%{fname}
+cp -R form.yml metadata.yml pillar.example README.md %{buildroot}%{fdir}/metadata/%{fname}
 %endif
 
 %if 0%{?sle_version:1} && 0%{?sle_version} < 150100

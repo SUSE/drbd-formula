@@ -1,13 +1,5 @@
 drbd:
-  $name: DRBD
-  $type: group
-
-  show_more:
-    $name: Advanced
-    $optional: true
-    $type: boolean
-    $help: Show advanced configurations of DRBD
-    $default: false
+  $type: namespace
 
   install_packages:
     $optional: true
@@ -16,7 +8,7 @@ drbd:
     $default: true
 
   with_ha:
-    $visibleIf: drbd$show_more == true
+    $visibleIf: .show_more == true
     $optional: true
     $type: boolean
     $default: false
@@ -27,16 +19,23 @@ drbd:
     $default: true
 
   stop_after_init_sync:
-    $visibleIf: drbd$show_more == true
+    $visibleIf: .show_more == true
     $optional: true
     $type: boolean
     $default: false
 
   need_format:
-    $visibleIf: drbd$show_more == true
+    $visibleIf: .show_more == true
     $optional: true
     $type: boolean
     $help: whether need to format after DRBD initial sync
+    $default: false
+
+  show_more:
+    $name: Advanced
+    $optional: true
+    $type: boolean
+    $help: Show advanced configurations of DRBD
     $default: false
 
   salt:
@@ -70,9 +69,9 @@ drbd:
     usage_count:
       $optional: true
       $type: select
-      $values: ["no",
-                "yes"
-               ]
+      $values:
+        - "no"
+        - "yes"
       $default: "no"
 
     minor_count:
@@ -98,10 +97,10 @@ drbd:
       quorum:
         $optional: true
         $type: select
-        $values: ["off",
-                  "majority",
-                  "all",
-                 ]
+        $values:
+          - "off"
+          - "majority"
+          - "all"
         $default: "off"
 
     net:
@@ -113,51 +112,51 @@ drbd:
         $name: Use multiple primaries
         $optional: true
         $type: select
-        $values: ["no",
-                  "yes"
-                 ]
+        $values:
+           - "no"
+           - "yes"
         $default: "no"
 
       fencing:
         $optional: true
         $type: select
-        $values: ["dont-care",
-                  "resource-only",
-                  "resource-and-stonith"
-                 ]
+        $values:
+          - "dont-care"
+          - "resource-only"
+          - "resource-and-stonith"
         $default: "resource-and-stonith"
 
       after_sb_0pri:
         $optional: true
         $type: select
-        $values: ["disconnect",
-                  "discard-younger-primary",
-                  "discard-older-primary",
-                  "discard-zero-changes",
-                  "discard-least-changes",
-                  "discard-local",
-                  "discard-remote",
-                 ]
+        $values:
+          - "disconnect"
+          - "discard-younger-primary"
+          - "discard-older-primary"
+          - "discard-zero-changes"
+          - "discard-least-changes"
+          - "discard-local"
+          - "discard-remote"
         $default: "discard-zero-changes"
 
       after_sb_1pri:
         $optional: true
         $type: select
-        $values: ["disconnect",
-                  "consensus",
-                  "violently-as0p",
-                  "discard-secondary",
-                  "call-pri-lost-after-sb",
-                 ]
+        $values:
+          - "disconnect"
+          - "consensus"
+          - "violently-as0p"
+          - "discard-secondary"
+          - "call-pri-lost-after-sb"
         $default: "discard-secondary"
 
       after_sb_2pri:
         $optional: true
         $type: select
-        $values: ["disconnect",
-                  "violently-as0p",
-                  "call-pri-lost-after-sb",
-                 ]
+        $values:
+          - "disconnect"
+          - "violently-as0p"
+          - "call-pri-lost-after-sb"
         $default: "disconnect"
 
     handlers:
@@ -193,7 +192,7 @@ drbd:
     $prototype:
       name:
         $name: Resource name
-        $placeholder: "testRes"
+        $placeholder: testRes
 
       device:
         $name: DRBD device
@@ -215,10 +214,10 @@ drbd:
         $help: Specified protocol on this connection
         $optional: true
         $type: select
-        $value: ["C",
-                 "B",
-                 "A"
-                ]
+        $values:
+          - "C"
+          - "B"
+          - "A"
         $default: "C"
 
       ping_timeout:
@@ -233,10 +232,10 @@ drbd:
         $help: DRBD reacts to I/O errors on lower-level device
         $optional: true
         $type: select
-        $value: ["pass_on",
-                 "call-local-io-error",
-                 "detach"
-                ]
+        $values:
+          - "pass_on"
+          - "call-local-io-error"
+          - "detach"
         $default: "pass_on"
 
       fixed_rate:
@@ -246,13 +245,13 @@ drbd:
         $default: true
 
       resync_rate: 
-        $visibleIf: drbd$resource$fixed_rate == true
+        $visibleIf: .fixed_rate == true
         $name: Fixed sync rate
         $optional: true
         $default: "150M"
 
       c_plan_ahead: 
-        $visibleIf: drbd$resource$fixed_rate == false
+        $visibleIf: .fixed_rate == false
         $name: C plan ahead
         $help: Dynamically control the resync speed
         $optional: true
@@ -260,40 +259,41 @@ drbd:
         $default: 20
 
       c_max_rate: 
-        $visibleIf: drbd$resource$fixed_rate == false
+        $visibleIf: .fixed_rate == false
         $name: C max rate
         $help: Max rate of dynamically resync rate
         $optional: true
         $default: "100M"
 
       c_fill_target:
-        $visibleIf: drbd$resource$fixed_rate == false
+        $visibleIf: .fixed_rate == false
         $name: C fille target
         $help: Fill the buffers along the data path with a defined amount of data
         $optional: true
         $default: "10M"
 
+# FIXME: drbd$need_format is not working.
+# http://docserv.nue.suse.com/documents/SUSE_Manager_develop/susemanager-best-practices/single-html/
+# https://www.suse.com/documentation/suse-manager-4/4.0/suse-manager/salt/salt-formulas.html
       file_system:
-        $visibleIf: drbd$need_format == true
         $name: File system
         $help: salt format the disk after initialize
         $optional: true
         $type: select
-        $value: ["xfs",
-                 "ext3",
-                 "ext4"
-                ]
+        $values:
+          - "xfs"
+          - "ext2"
+          - "ext3"
+          - "ext4"
         $default: "xfs"
 
       mount_point:
-        $visibleIf: drbd$need_format == true
         $name: Mount point
         $help: Mount point for the resource
         $optional: true
         $placeholder: "/mnt/testRes"
 
-     virtual_ip:
-        $visibleIf: drbd$need_format == true && drbd$with_ha == true
+      virtual_ip:
         $name: Virtual IP
         $help: Virtual IP per resource
         $optional: true
