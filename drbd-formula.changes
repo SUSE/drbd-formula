@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Mon Jul  22 13:16:33 UTC 2019 - Diego Akechi <dakechi@suse.com>
+
+ - Version 0.3.1
+   * Change the requires to salt-formulas-configuration as this is
+     the virtual "provides" shared by salt and SUMA to guarantee that
+     the formula works integrated with both (not at the same time).
+
+-------------------------------------------------------------------
 Mon Jul  8 05:31:33 UTC 2019 - nick wang <nwang@suse.com>
 
 - Version 0.3.0, jsc#SLE-6970
