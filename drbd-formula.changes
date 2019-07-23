@@ -6,6 +6,9 @@ Mon Jul  22 13:16:33 UTC 2019 - Diego Akechi <dakechi@suse.com>
      the virtual "provides" shared by salt and SUMA to guarantee that
      the formula works integrated with both (not at the same time).
 
+   * Change the directory permission to avoid file conflicts with
+     SUMA.
+
 -------------------------------------------------------------------
 Mon Jul  8 05:31:33 UTC 2019 - nick wang <nwang@suse.com>
 

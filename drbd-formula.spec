@@ -83,9 +83,9 @@ cp -R form.yml metadata.yml pillar.example README.md %{buildroot}%{fdir}/metadat
 %dir %{fdir}/metadata
 %{fdir}/states/%{fname}
 %{fdir}/metadata/%{fname}
-%dir %attr(0750, root, salt) %{fdir}
-%dir %attr(0750, root, salt) %{fdir}/states
-%dir %attr(0750, root, salt) %{fdir}/metadata
+%dir %attr(-, root, root) %{fdir}
+%dir %attr(-, root, root) %{fdir}/states
+%dir %attr(-, root, root) %{fdir}/metadata
 %endif
 
 %changelog
