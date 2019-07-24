@@ -29,6 +29,8 @@ sudo cp salt-shaptools/salt/modules/* /srv/salt/_modules
 sudo cp salt-shaptools/salt/states/* /srv/salt/_states
 ```
 
+2. Work with [HABOOTSTRAP formula](https://github.com/SUSE/habootstrap-formula) or [NFS formula](https://github.com/saltstack-formulas/nfs-formula), could deploy NFS on top of DRBD with/without Pacemaker
+
 ## Install (Suse distros)
 
 The easiest way to install the formula in SUSE distributions is using a rpm package.

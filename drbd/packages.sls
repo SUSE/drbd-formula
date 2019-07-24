@@ -32,6 +32,13 @@ install_cluster_packages_for_drbd:
       - hawk2
       - pacemaker
       - corosync
-{% endif %}
 
+{% else %}
+
+install_nfs_packages_for_drbd:
+  pkg.installed:
+    - pkgs:
+      - nfs-formula
+
+{% endif %}
 {% endif %}
