@@ -52,13 +52,13 @@ Available on SUSE manager 4.0
 %if 0%{?sle_version:1} && 0%{?sle_version} < 150100
 mkdir -p %{buildroot}/srv/salt/
 cp -R %{fname} %{buildroot}/srv/salt
-cp -R templates/* %{buildroot}/srv/salt/%{fname}/templates/
+cp -R examples %{buildroot}/srv/salt/%{fname}/templates/
 %else
 # On SUMA 4.0/15-SP1, a single shared directory will be used.
 mkdir -p %{buildroot}%{fdir}/states/%{fname}
 mkdir -p %{buildroot}%{fdir}/metadata/%{fname}
 cp -R %{fname} %{buildroot}%{fdir}/states
-cp -R templates/* %{buildroot}%{fdir}/states/%{fname}/templates/
+cp -R examples %{buildroot}%{fdir}/states/%{fname}/templates/
 cp -R form.yml metadata.yml pillar.example README.md %{buildroot}%{fdir}/metadata/%{fname}
 %endif
 

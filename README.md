@@ -30,6 +30,7 @@ sudo cp salt-shaptools/salt/states/* /srv/salt/_states
 ```
 
 2. Work with [HABOOTSTRAP formula](https://github.com/SUSE/habootstrap-formula) or [NFS formula](https://github.com/saltstack-formulas/nfs-formula), could deploy NFS on top of DRBD with/without Pacemaker
+> [NFS formula is packaged](https://build.opensuse.org/package/show/network:ha-clustering:Unstable/nfs-formula) in openSUSE build service
 
 ## Install (Suse distros)
 

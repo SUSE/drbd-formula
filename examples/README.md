@@ -6,6 +6,6 @@
 > Each NFS group has a virtual IP.
 
 
-* [Jinja template for drbd with nfs](./drbd_with_nfs.j2)
-* [Pillar: DRBD formula](./drbd_with_nfs.sls)
-* [Pillar: habootstrap formula](./drbd_with_nfs_cluster.sls)
+* [Jinja template for drbd with nfs of crm resource](./with_pacemaker/drbd_with_nfs_crm.j2)
+* [Pillar: DRBD formula](./with_pacemaker/pillar.example.drbd)
+* [Pillar: habootstrap formula](./with_pacemaker/pillar.example.cluster)
