@@ -5,6 +5,7 @@ Mon Jul  22 13:16:33 UTC 2019 - Diego Akechi <dakechi@suse.com>
    * Change the requires to salt-formulas-configuration as this is
      the virtual "provides" shared by salt and SUMA to guarantee that
      the formula works integrated with both (not at the same time).
+     (boo#1142306)
 
    * Change the directory permission to avoid file conflicts with
      SUMA.
