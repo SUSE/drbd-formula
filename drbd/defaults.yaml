@@ -1,6 +1,6 @@
 drbd:
   install_packages: true
-  with_ha: false
+  with_ha: true
   need_init_sync: true
   stop_after_init_sync: true
   need_format: true

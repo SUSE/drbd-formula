@@ -11,7 +11,7 @@ drbd:
     $visibleIf: .show_more == true
     $optional: true
     $type: boolean
-    $default: false
+    $default: true
 
   need_init_sync:
     $optional: true
