@@ -1,0 +1,28 @@
+nfs:
+  # Global settings:
+  mkmnt: False
+  mount_opts: noauto,ro
+  persist_unmount: True
+  persist_mount: False
+
+  # Server settings
+  server:
+    exports:
+      /mnt/fs-A: "*(rw,sync,no_subtree_check)"
+      /mnt/fs-B: "*(rw,sync,no_subtree_check)"
+
+  # mount settings
+  mount:
+    somename:
+      mountpoint: "/mnt/local-A"
+      location: "drbd-node1:/mnt/fs-A"
+      opts: "vers=3,rsize=65535,wsize=65535"
+      persist: False
+      mkmnt: True
+
+  unmount:
+    someothername:
+      mountpoint: "/mnt/local-A"
+      location: "drbd-node1:/mnt/fs-A"
+      persist: False
+

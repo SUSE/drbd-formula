@@ -1,7 +1,11 @@
 {%- from "drbd/map.jinja" import drbd with context -%}
+{% set host = grains['host'] %}
+
+include:
+  - drbd.promote
 
 {% for res in drbd.resource %}
-{% if drbd.need_format is defined and drbd.need_format is sameas true %}
+{% if drbd.salt.promotion == host %}
 format-{{ res.name }}:
   blockdev.formatted:
     - name: {{ res.device|default("ext4") }}

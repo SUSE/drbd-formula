@@ -1,4 +1,4 @@
-``drbd_with_nfs`` with [htbootstrap-formula](https://github.com/SUSE/habootstrap-formula.git)
+``drbd_with_nfs`` via [htbootstrap-formula](https://github.com/SUSE/habootstrap-formula.git)
 -------------------
 > Load NFS module/service.\
 > Configure ms DRBD resources.\
@@ -9,3 +9,15 @@
 * [Jinja template for drbd with nfs of crm resource](./with_pacemaker/drbd_with_nfs_crm.j2)
 * [Pillar: DRBD formula](./with_pacemaker/pillar.example.drbd)
 * [Pillar: habootstrap formula](./with_pacemaker/pillar.example.cluster)
+
+
+``drbd_with_nfs`` via [nfs-formula](https://github.com/saltstack-formulas/nfs-formula)
+-------------------
+*Should run on DRBD master only*
+
+> Configure NFS exports
+> Load NFS module/service.\
+
+
+* [Pillar: DRBD formula](./without_pacemaker/pillar.example.drbd)
+* [Pillar: NFS formula](./with_pacemakerout/pillar.example.nfs)
