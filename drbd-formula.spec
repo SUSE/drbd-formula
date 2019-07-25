@@ -20,7 +20,7 @@
 %define fname drbd
 %define fdir %{_datadir}/salt-formulas
 Name:           drbd-formula
-Version:        0.3.1
+Version:        0.3.2
 Release:        0
 Summary:        DRBD deployment salt formula
 License:        Apache-2.0
