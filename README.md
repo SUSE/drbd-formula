@@ -4,7 +4,7 @@ drbd-formula
 [![Travis Build](https://api.travis-ci.org/SUSE/drbd-formula.svg?branch=master)](https://travis-ci.org/SUSE/drbd-formula)
 
 # Version
-0.3.0
+0.3.1
 
 # DRBD bootstrap salt formula
 
@@ -110,3 +110,8 @@ Demote all DRBD resources.
 ---------------
 
 Waiting all DRBD resources finish syncing.
+
+``drbd.nfs_ready``
+---------------
+
+Format the backing device and get mounted.

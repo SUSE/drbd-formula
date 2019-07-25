@@ -20,7 +20,7 @@
 %define fname drbd
 %define fdir %{_datadir}/salt-formulas
 Name:           drbd-formula
-Version:        0.3.0
+Version:        0.3.1
 Release:        0
 Summary:        DRBD deployment salt formula
 License:        Apache-2.0
@@ -34,7 +34,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 # On SLE/Leap 15-SP1 and TW requires the new salt-formula configuration location.
 %if ! (0%{?sle_version:1} && 0%{?sle_version} < 150100)
-Requires:       salt-standalone-formulas-configuration
+Requires:       salt-formulas-configuration
 %endif
 
 
@@ -83,9 +83,9 @@ cp -R form.yml metadata.yml pillar.example README.md %{buildroot}%{fdir}/metadat
 %dir %{fdir}/metadata
 %{fdir}/states/%{fname}
 %{fdir}/metadata/%{fname}
-%dir %attr(0750, root, salt) %{fdir}
-%dir %attr(0750, root, salt) %{fdir}/states
-%dir %attr(0750, root, salt) %{fdir}/metadata
+%dir %attr(-, root, root) %{fdir}
+%dir %attr(-, root, root) %{fdir}/states
+%dir %attr(-, root, root) %{fdir}/metadata
 %endif
 
 %changelog

@@ -22,14 +22,14 @@ drbd:
     $visibleIf: .show_more == true
     $optional: true
     $type: boolean
-    $default: false
+    $default: true
 
   need_format:
     $visibleIf: .show_more == true
     $optional: true
     $type: boolean
     $help: whether need to format after DRBD initial sync
-    $default: false
+    $default: true
 
   show_more:
     $name: Advanced

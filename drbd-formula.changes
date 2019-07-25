@@ -1,4 +1,14 @@
 -------------------------------------------------------------------
+Thu Jul 25 02:19:59 UTC 2019 - nick wang <nwang@suse.com>
+
+- Version 0.3.1
+  * Fix issue with file permissions and rename salt formulas dep
+  * Restructure the deploy and examples directories
+  * Add examples of using NFS formula
+  * Fix the issue of mkfs and mount NFS share
+  * Polish the form.yml based on SUMA4.0, change some default values.
+
+-------------------------------------------------------------------
 Mon Jul  8 05:31:33 UTC 2019 - nick wang <nwang@suse.com>
 
 - Version 0.3.0, jsc#SLE-6970
