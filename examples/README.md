@@ -1,4 +1,4 @@
-``drbd_with_nfs`` via [htbootstrap-formula](https://github.com/SUSE/habootstrap-formula.git)
+``drbd_with_nfs`` via [habootstrap-formula](https://github.com/SUSE/habootstrap-formula.git)
 -------------------
 > Load NFS module/service.\
 > Configure ms DRBD resources.\
