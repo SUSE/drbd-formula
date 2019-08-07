@@ -5,21 +5,24 @@ include:
   - drbd.additional_repos
   - drbd.mkfs
 
-install_nfs_packages_for_drbd:
+{% if drbd.with_ha|default(true) is sameas false %}
+install_nfs_formula_packages_for_drbd:
   pkg.installed:
     - pkgs:
       - nfs-formula
+{% endif %}
 
 {% for res in drbd.resource %}
 {% if drbd.salt.promotion == host %}
-{{ res.mount_point }}:
+drbd_{{ res.name }}_create_{{ res.mount_point }}:
   file.directory:
+    - name: {{ res.mount_point }}
     - user: root
     - group: root
     - dir_mode: 755
     - file_mode: 644
 
-{{ res.name }}_mountpoint:
+drbd_{{ res.name }}_mountpoint:
   mount.mounted:
     - name: {{ res.mount_point }}
     - device: {{ res.device }}

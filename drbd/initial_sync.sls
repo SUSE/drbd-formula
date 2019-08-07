@@ -34,7 +34,14 @@ init-promote-{{ res.name }}:
       - init-extra-sleep
 
 {% if drbd.need_format is defined and drbd.need_format is sameas true%}
-format-{{ res.name }}:
+{% if res.file_system == 'xfs' %}
+init_drbd_install_xfs:
+  pkg.installed:
+    - pkgs:
+      - xfsprogs
+{% endif %}
+
+init-format-{{ res.name }}:
   blockdev.formatted:
     - name: {{ res.device }}
     - fs_type: {{ res.file_system|default("ext4") }}
@@ -59,7 +66,7 @@ init-wait-for-{{ res.name }}-synced:
     - require:
 {% if drbd.salt.promotion == host %}
 {% if drbd.format_as is defined %}
-      - format-{{ res.name }}
+      - init-format-{{ res.name }}
 {% else %}
       - init-promote-{{ res.name }}
 {% endif %}

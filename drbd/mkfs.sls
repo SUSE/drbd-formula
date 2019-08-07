@@ -6,7 +6,14 @@ include:
 
 {% for res in drbd.resource %}
 {% if drbd.salt.promotion == host %}
-format-{{ res.name }}:
+{% if res.file_system == 'xfs' %}
+drbd_install_xfs:
+  pkg.installed:
+    - pkgs:
+      - xfsprogs
+{% endif %}
+
+drbd_format_{{ res.name }}:
   blockdev.formatted:
     - name: {{ res.device|default("ext4") }}
     - fs_type: {{ res.file_system }}
