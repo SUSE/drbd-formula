@@ -25,6 +25,15 @@ init-extra-sleep:
     - name: 'sleep 3'
 
 {% for res in drbd.resource %}
+{% if drbd.need_format is defined and drbd.need_format is sameas true%}
+{% if res.file_system == 'xfs' %}
+init_drbd_install_xfs:
+  pkg.installed:
+    - pkgs:
+      - xfsprogs
+{% endif %}
+{% endif %}
+
 {% if drbd.salt.promotion == host %}
 init-promote-{{ res.name }}:
   drbd.promoted:
@@ -34,13 +43,6 @@ init-promote-{{ res.name }}:
       - init-extra-sleep
 
 {% if drbd.need_format is defined and drbd.need_format is sameas true%}
-{% if res.file_system == 'xfs' %}
-init_drbd_install_xfs:
-  pkg.installed:
-    - pkgs:
-      - xfsprogs
-{% endif %}
-
 init-format-{{ res.name }}:
   blockdev.formatted:
     - name: {{ res.device }}
