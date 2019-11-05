@@ -4,6 +4,6 @@
 init-wait-for-{{ res.name }}-synced:
   drbd.wait_for_successful_synced:
     - name: {{ res.name }}
-    - interval: {{ drbd.salt.sync_interval }}
-    - timeout: {{ drbd.salt.sync_timeout }}
+    - interval: {{ drbd.sync_interval }}
+    - timeout: {{ drbd.sync_timeout }}
 {% endfor %}

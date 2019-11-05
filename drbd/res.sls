@@ -4,7 +4,7 @@
 {% set nodeid = 1 %}
 /etc/drbd.d/{{ res.name }}.res:
   file.managed:
-    - source: salt://drbd/templates/{{ drbd.salt.res_template }}
+    - source: salt://drbd/templates/{{ drbd.res_template }}
     - user: root
     - group: root
     - mode: 644

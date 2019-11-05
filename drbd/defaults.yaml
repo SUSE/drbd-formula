@@ -1,15 +1,13 @@
 drbd:
   install_packages: false
   with_ha: false
+  promotion: "drbd-node1"
+  res_template: "res_single_vol_v9.j2"
   need_init_sync: true
-  stop_after_init_sync: true
+  sync_interval: 10
+  sync_timeout: 500
   need_format: true
-
-  salt:
-    res_template: "res_single_vol_v9.j2"
-    promotion: "drbd-node1"
-    sync_interval: 10
-    sync_timeout: 500
+  stop_after_init_sync: true
 
   global:
     usage_count: "no"

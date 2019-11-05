@@ -5,7 +5,7 @@ include:
   - drbd.promote
 
 {% for res in drbd.resource %}
-{% if drbd.salt.promotion == host %}
+{% if drbd.promotion == host %}
 {% if res.file_system == 'xfs' %}
 drbd_install_xfs:
   pkg.installed:

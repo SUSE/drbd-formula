@@ -13,7 +13,7 @@ install_nfs_formula_packages_for_drbd:
 {% endif %}
 
 {% for res in drbd.resource %}
-{% if drbd.salt.promotion == host %}
+{% if drbd.promotion == host %}
 drbd_{{ res.name }}_create_{{ res.mount_point }}:
   file.directory:
     - name: {{ res.mount_point }}

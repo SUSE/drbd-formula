@@ -8,58 +8,54 @@ drbd:
     $default: false
 
   with_ha:
-    $visibleIf: .show_more == true
     $optional: true
     $type: boolean
+    $help: whether need to install SLE HA related packages
     $default: false
+
+  promotion:
+    $name: Primary node when promoting DRBD
+    $help: Choose a node to become the first primary
+
+  res_template:
+    $name: Resource template for /etc/drbd.d/xxx.res
+    $optional: true
+    $help: The template for DRBD resources
+    $default: "res_single_vol_v9.j2"
 
   need_init_sync:
     $optional: true
     $type: boolean
+    $help: Whether need to do the initialize sync
     $default: true
 
-  stop_after_init_sync:
-    $visibleIf: .show_more == true
+  sync_interval:
+    $visibleIf: .need_init_sync == true
     $optional: true
-    $type: boolean
-    $default: true
+    $type: number
+    $help: Interval to check the initialize sync
+    $default: 10
+
+  sync_timeout:
+    $visibleIf: .need_init_sync == true
+    $optional: true
+    $type: number
+    $help: Timeout for the initialize sync
+    $default: 500
 
   need_format:
-    $visibleIf: .show_more == true
+    $visibleIf: .need_init_sync == true
     $optional: true
     $type: boolean
     $help: whether need to format after DRBD initial sync
     $default: true
 
-  show_more:
-    $name: Advanced
+  stop_after_init_sync:
+    $visibleIf: .need_init_sync == true
     $optional: true
     $type: boolean
-    $help: Show advanced configurations of DRBD
-    $default: false
-
-  salt:
-    $name: Salt deployment related parameters
-    $type: group
-
-    promotion:
-      $name: Primary node when promoting DRBD
-
-    res_template:
-      $name: Resource template for /etc/drbd.d/xxx.res
-      $optional: true
-      $help: The template for DRBD resources
-      $default: "res_single_vol_v9.j2"
-
-    sync_interval:
-      $optional: true
-      $type: number
-      $default: 10
-
-    sync_timeout:
-      $optional: true
-      $type: number
-      $default: 500
+    $help: whether need to stop DRBD after initial sync
+    $default: true
 
   global:
     $name: global section of /etc/drbd.d/global_common.conf
