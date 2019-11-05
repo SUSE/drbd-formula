@@ -3,10 +3,10 @@
 
 drbd:
   ## Install required package to manage DRBD
-  #install_packages: true
+  #install_packages: false
 
   ## Configure DRBD in pacemaker cluster
-  #with_ha: true
+  #with_ha: false
 
   ## Perform initial sync for DRBD resources
   #need_init_sync: true

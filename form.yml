@@ -5,13 +5,13 @@ drbd:
     $optional: true
     $type: boolean
     $help: whether need to install DRBD packages first
-    $default: true
+    $default: false
 
   with_ha:
     $visibleIf: .show_more == true
     $optional: true
     $type: boolean
-    $default: true
+    $default: false
 
   need_init_sync:
     $optional: true
