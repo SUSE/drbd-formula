@@ -5,7 +5,7 @@ include:
   - drbd.additional_repos
   - drbd.mkfs
 
-{% if drbd.with_ha|default(true) is sameas false %}
+{% if drbd.with_ha is sameas false %}
 install_nfs_formula_packages_for_drbd:
   pkg.installed:
     - pkgs:

@@ -11,8 +11,8 @@
     - template: jinja
     - defaults:
         name: '{{ res.name }}'
-        device: '{{ res.device|default(["/dev/drbd", loop.index]|join('')) }}'
-        disk: '{{ res.disk|default(["/dev/vdb", loop.index]|join('')) }}'
+        device: '{{ res.device }}'
+        disk: '{{ res.disk }}'
 
         meta_disk: '{{ res.meta_disk|default("internal") }}'
         protocol:  '{{ res.protocol|default("C") }}'

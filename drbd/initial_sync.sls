@@ -63,8 +63,8 @@ init-sleep-{{ res.name }}:
 init-wait-for-{{ res.name }}-synced:
   drbd.wait_for_successful_synced:
     - name: {{ res.name }}
-    - interval: {{ drbd.salt.sync_interval|default(5) }}
-    - timeout: {{ drbd.salt.sync_timeout|default(300) }}
+    - interval: {{ drbd.salt.sync_interval }}
+    - timeout: {{ drbd.salt.sync_timeout }}
     - require:
 {% if drbd.salt.promotion == host %}
 {% if drbd.format_as is defined %}
@@ -90,7 +90,7 @@ init-demote-{{ res.name }}:
 # sleep time should >= drbd.salt.sync_interval
 init-sleep-to-wait-all-before-stop-{{ res.name }}:
   cmd.run:
-    - name: 'sleep {{ drbd.salt.sync_interval|default(5) + 3 }}'
+    - name: 'sleep {{ drbd.salt.sync_interval + 3 }}'
     - require:
 {% if drbd.salt.promotion == host %}
       - init-demote-{{ res.name }}
