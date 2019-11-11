@@ -1,15 +1,14 @@
 drbd:
-  install_packages: true
-  with_ha: true
+  install_packages: false
+  with_ha: false
+  # Must provide the promotion
+  #promotion: ""
+  res_template: "res_single_vol_v9.j2"
   need_init_sync: true
-  stop_after_init_sync: true
+  sync_interval: 10
+  sync_timeout: 500
   need_format: true
-
-  salt:
-    res_template: "res_single_vol_v9.j2"
-    promotion: "drbd-node1"
-    sync_interval: 10
-    sync_timeout: 500
+  stop_after_init_sync: true
 
   global:
     usage_count: "no"
@@ -32,53 +31,5 @@ drbd:
       after_resync_target: ""
       split_brain: ""
 
-  # newres must have a name
-  # Could test with res name list only
-  resource:
-    - name: "beijing"
-      device: "/dev/drbd5"
-      disk: "/dev/vdb1"
-
-      # Refer to bsc#1101037
-      fixed_rate:  true
-      c_plan_ahead: 20
-      c_max_rate: "100M"
-      c_fill_target: "10M"
-
-      # Salt specific
-      file_system: "xfs"
-      mount_point: "/mnt/beijing"
-      virtual_ip: "192.168.10.201"
-
-      nodes:
-        - name: "drbd-node1"
-          ip: "192.168.10.101"
-          port: 7990
-          id: 1
-        - name: "drbd-node2"
-          ip: "192.168.10.102"
-          port: 7990
-          id: 2
-
-    - name: "shanghai"
-      device: "/dev/drbd6"
-      disk: "/dev/vdb2"
-      on_io_error: "detach"
-
-      fixed_rate:  True
-      resync_rate: "150M"
-
-      # Salt specific
-      file_system: "ext4"
-      mount_point: "/mnt/shanghai"
-      virtual_ip: "192.168.10.202"
-
-      nodes:
-        - name: "drbd-node1"
-          ip: "192.168.10.101"
-          port: 7982
-          id: 1
-        - name: "drbd-node2"
-          ip: "192.168.10.102"
-          port: 7982
-          id: 2
+  # Must configure the `resource`
+  #resource:

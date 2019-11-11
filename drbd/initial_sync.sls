@@ -34,7 +34,7 @@ init_drbd_install_xfs:
 {% endif %}
 {% endif %}
 
-{% if drbd.salt.promotion == host %}
+{% if drbd.promotion == host %}
 init-promote-{{ res.name }}:
   drbd.promoted:
     - name: {{ res.name }}
@@ -63,10 +63,10 @@ init-sleep-{{ res.name }}:
 init-wait-for-{{ res.name }}-synced:
   drbd.wait_for_successful_synced:
     - name: {{ res.name }}
-    - interval: {{ drbd.salt.sync_interval|default(5) }}
-    - timeout: {{ drbd.salt.sync_timeout|default(300) }}
+    - interval: {{ drbd.sync_interval }}
+    - timeout: {{ drbd.sync_timeout }}
     - require:
-{% if drbd.salt.promotion == host %}
+{% if drbd.promotion == host %}
 {% if drbd.format_as is defined %}
       - init-format-{{ res.name }}
 {% else %}
@@ -77,7 +77,7 @@ init-wait-for-{{ res.name }}-synced:
 {% endif %}
 
 {% if drbd.stop_after_init_sync is defined and drbd.stop_after_init_sync is sameas true %}
-{% if drbd.salt.promotion == host %}
+{% if drbd.promotion == host %}
 init-demote-{{ res.name }}:
   drbd.demoted:
     - name: {{ res.name }}
@@ -87,12 +87,12 @@ init-demote-{{ res.name }}:
 
 # Sleep several seconds, in case one node stop before other nodes
 # check disk status in wait-for-{{ res.name }}-synced
-# sleep time should >= drbd.salt.sync_interval
+# sleep time should >= drbd.sync_interval
 init-sleep-to-wait-all-before-stop-{{ res.name }}:
   cmd.run:
-    - name: 'sleep {{ drbd.salt.sync_interval|default(5) + 3 }}'
+    - name: 'sleep {{ drbd.sync_interval + 3 }}'
     - require:
-{% if drbd.salt.promotion == host %}
+{% if drbd.promotion == host %}
       - init-demote-{{ res.name }}
 {% else %}
       - init-wait-for-{{ res.name }}-synced

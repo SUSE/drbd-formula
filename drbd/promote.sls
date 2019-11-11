@@ -6,7 +6,7 @@ pr-start-{{ res.name }}:
   drbd.started:
     - name: {{ res.name }}
 
-{% if drbd.salt.promotion != host %}
+{% if drbd.promotion != host %}
 pr-demote-{{ res.name }}:
   drbd.demoted:
     - name: {{ res.name }}

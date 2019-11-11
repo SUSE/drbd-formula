@@ -4,15 +4,15 @@
 {% set nodeid = 1 %}
 /etc/drbd.d/{{ res.name }}.res:
   file.managed:
-    - source: salt://drbd/templates/{{ drbd.salt.res_template }}
+    - source: salt://drbd/templates/{{ drbd.res_template }}
     - user: root
     - group: root
     - mode: 644
     - template: jinja
     - defaults:
         name: '{{ res.name }}'
-        device: '{{ res.device|default(["/dev/drbd", loop.index]|join('')) }}'
-        disk: '{{ res.disk|default(["/dev/vdb", loop.index]|join('')) }}'
+        device: '{{ res.device }}'
+        disk: '{{ res.disk }}'
 
         meta_disk: '{{ res.meta_disk|default("internal") }}'
         protocol:  '{{ res.protocol|default("C") }}'

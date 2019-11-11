@@ -1,7 +1,7 @@
 #
 # spec file for package drbd-formula
 #
-# Copyright (c) 2019 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2019 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -16,11 +16,11 @@
 #
 
 
-# See also http://en.opensuse.org/openSUSE:Specfile_guidelines
+# See also https://en.opensuse.org/openSUSE:Specfile_guidelines
 %define fname drbd
 %define fdir %{_datadir}/salt-formulas
 Name:           drbd-formula
-Version:        0.3.3
+Version:        0.3.4
 Release:        0
 Summary:        DRBD deployment salt formula
 License:        Apache-2.0
