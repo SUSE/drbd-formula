@@ -24,7 +24,6 @@ Version:        0.3.4
 Release:        0
 Summary:        DRBD deployment salt formula
 License:        Apache-2.0
-Group:          System/Packages
 URL:            https://github.com/SUSE/%{name}
 Source0:        %{name}-%{version}.tar.gz
 Requires:       drbd-utils
@@ -36,7 +35,6 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %if ! (0%{?sle_version:1} && 0%{?sle_version} < 150100)
 Requires:       salt-formulas-configuration
 %endif
-
 
 %description
 DRBD deployment salt formula
