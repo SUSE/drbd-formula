@@ -23,7 +23,6 @@ Version:        0.3.5
 Release:        0
 Summary:        DRBD deployment salt formula
 License:        Apache-2.0
-Group:          System/Packages
 URL:            https://github.com/SUSE/%{name}
 Source0:        %{name}-%{version}.tar.gz
 Requires:       drbd-utils
@@ -46,7 +45,6 @@ Available on SUSE manager 4.0
 %build
 
 %install
-
 mkdir -p %{buildroot}%{fdir}/states/%{fname}
 mkdir -p %{buildroot}%{fdir}/metadata/%{fname}
 cp -R %{fname} %{buildroot}%{fdir}/states
