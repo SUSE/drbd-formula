@@ -12,6 +12,9 @@ install-ha-ha_sles-pattern-for-drbd:
     - fromrepo: {{ repo }}
     - pkgs:
       - patterns-ha-ha_sles
+    - retry:
+        attempts: 3
+        interval: 15
 
 {% else %}
 
@@ -22,6 +25,9 @@ install_drbd_packages:
       - drbd
       - drbd-utils
       - yast2-drbd
+    - retry:
+        attempts: 3
+        interval: 15
 
 {% if drbd.with_ha is sameas true %}
 install_cluster_packages_for_drbd:
@@ -32,6 +38,9 @@ install_cluster_packages_for_drbd:
       - hawk2
       - pacemaker
       - corosync
+    - retry:
+        attempts: 3
+        interval: 15
 
 {% else %}
 
@@ -39,6 +48,9 @@ install_nfs_packages_for_drbd:
   pkg.installed:
     - pkgs:
       - nfs-formula
+    - retry:
+        attempts: 3
+        interval: 15
 
 {% endif %}
 {% endif %}
