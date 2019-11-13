@@ -2,7 +2,6 @@
 
 include:
 {% if drbd.install_packages is sameas true %}
-  - drbd.additional_repos
   - drbd.packages
 {% endif %}
   - drbd.drbd_kmod
