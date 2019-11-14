@@ -20,4 +20,4 @@
 
 
 * [Pillar: DRBD formula](./pillar.example.drbd)
-* [Pillar: NFS formula](./with_pacemakerout/pillar.example.nfs)
+* [Pillar: NFS formula](./without_pacemakerout/pillar.example.nfs)

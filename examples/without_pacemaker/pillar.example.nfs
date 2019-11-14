@@ -25,4 +25,3 @@ nfs:
       mountpoint: "/mnt/local-A"
       location: "drbd-node1:/mnt/fs-A"
       persist: False
-
