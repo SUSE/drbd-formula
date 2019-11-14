@@ -2,7 +2,6 @@
 {% set host = grains['host'] %}
 
 include:
-  - drbd.additional_repos
   - drbd.mkfs
 
 {% if drbd.with_ha is sameas false %}
