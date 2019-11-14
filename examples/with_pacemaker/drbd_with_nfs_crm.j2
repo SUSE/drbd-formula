@@ -18,6 +18,7 @@ primitive nfsserver systemd:nfs-server \
 clone cl-nfsserver nfsserver \
         meta interleave=true
 
+# Need to edit drbd pillar file.
 {% for res in drbd.resource %}
 primitive drbd-{{ res.name }} ocf:linbit:drbd \
           params drbd_resource={{ res.name }} \
@@ -26,7 +27,7 @@ primitive drbd-{{ res.name }} ocf:linbit:drbd \
 
 ms ms_{{ res.name }} drbd-{{ res.name }} \
    meta master-max=1 master-node-max=1 \
-   meta clone-max=2 clone-node-max=1 \
+   meta clone-max={{ res.nodes | length }} clone-node-max=1 \
    meta notify=true target-role=Started
 
 primitive fs_{{ res.name }} ocf:heartbeat:Filesystem \
