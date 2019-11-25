@@ -31,6 +31,9 @@ init_drbd_install_xfs:
   pkg.installed:
     - pkgs:
       - xfsprogs
+    - retry:
+        attempts: 3
+        interval: 15
 {% endif %}
 {% endif %}
 

@@ -9,6 +9,9 @@ install_nfs_formula_packages_for_drbd:
   pkg.installed:
     - pkgs:
       - nfs-formula
+    - retry:
+        attempts: 3
+        interval: 15
 {% endif %}
 
 {% for res in drbd.resource %}
