@@ -8,7 +8,7 @@
     - mode: 644
     - template: jinja
     - defaults:
-        resource: {{ drbd.resource }}
+        resource: {{ drbd.resource|json }}
 
 
 /etc/drbd.d/global_common.conf:

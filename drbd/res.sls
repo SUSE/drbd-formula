@@ -39,6 +39,6 @@
 
 {% if res.nodes is defined and res.nodes|length > 0 %}
     - context:
-        nodes: {{ res.nodes }}
+        nodes: {{ res.nodes|json }}
 {% endif %}
 {% endfor %}
