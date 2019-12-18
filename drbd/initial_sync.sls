@@ -90,10 +90,10 @@ init-demote-{{ res.name }}:
 
 # Sleep several seconds, in case one node stop before other nodes
 # check disk status in wait-for-{{ res.name }}-synced
-# sleep time should >= drbd.sync_interval
+# sleep time should at least >= drbd.sync_interval
 init-sleep-to-wait-all-before-stop-{{ res.name }}:
   cmd.run:
-    - name: 'sleep {{ drbd.sync_interval + 3 }}'
+    - name: 'sleep {{ drbd.sync_interval + 60 }}'
     - require:
 {% if drbd.promotion == host %}
       - init-demote-{{ res.name }}
