@@ -54,3 +54,15 @@ install_nfs_packages_for_drbd:
 
 {% endif %}
 {% endif %}
+
+{% for res in drbd.resource %}
+{% if res.file_system == 'xfs' %}
+install_xfs_pacage_for_drbd:
+  pkg.installed:
+    - pkgs:
+      - xfsprogs
+    - retry:
+        attempts: 3
+        interval: 15
+{% endif %}
+{% endfor %}

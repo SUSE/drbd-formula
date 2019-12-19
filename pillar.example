@@ -22,7 +22,7 @@ drbd:
   #sync_interval: 10
 
   ## Optional: timeout for waiting for resource synced
-  #sync_timeout: 500
+  #sync_timeout: 2000
 
   ## Optional: format the DRBD resource after initial resync
   #need_format: true

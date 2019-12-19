@@ -6,7 +6,7 @@ drbd:
   res_template: "res_single_vol_v9.j2"
   need_init_sync: true
   sync_interval: 10
-  sync_timeout: 500
+  sync_timeout: 2000
   need_format: true
   stop_after_init_sync: true
 
