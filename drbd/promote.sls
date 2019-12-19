@@ -15,8 +15,9 @@ pr-demote-{{ res.name }}:
 {% else %}
 # Sleep for a while in case original pri not demote yet.
 pr-sleep-{{ res.name }}:
-  cmd.run:
-    - name: 'sleep 1'
+  module.run:
+    - test.sleep:
+      - length: 3
     - require:
       - pr-start-{{ res.name }}
 

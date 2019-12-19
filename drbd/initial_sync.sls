@@ -35,8 +35,9 @@ init-start-{{ res.name }}:
 {% endfor %}
 
 init-sleep-drbd-start:
-  cmd.run:
-    - name: 'sleep 3'
+  module.run:
+    - test.sleep:
+      - length: 3
 
 {% for res in drbd.resource %}
 {% if drbd.promotion == host %}
@@ -49,8 +50,9 @@ init-promote-{{ res.name }}:
 
 {% else %}
 init-sleep-{{ res.name }}-promote:
-  cmd.run:
-    - name: 'sleep 3'
+  module.run:
+    - test.sleep:
+      - length: 3
     - require:
       - init-sleep-drbd-start
 {% endif %}
@@ -73,8 +75,9 @@ init-wait-for-{{ res.name }}-synced:
 # check disk status in wait-for-{{ res.name }}-synced
 # sleep time should at least >= drbd.sync_interval
 init-sleep-to-wait-all-synced-{{ res.name }}:
-  cmd.run:
-    - name: 'sleep {{ drbd.sync_interval + 60 }}'
+  module.run:
+    - test.sleep:
+      - length: {{ drbd.sync_interval + 60 }}
     - require:
       - init-wait-for-{{ res.name }}-synced
 
@@ -93,8 +96,9 @@ init-format-{{ res.name }}:
 # Since eventually the later steps will be blocked
 # on waiting the primary node finished format.
 init-sleep-{{ res.name }}-format:
-  cmd.run:
-    - name: 'sleep 10'
+  module.run:
+    - test.sleep:
+      - length: 10
     - require:
       - init-sleep-to-wait-all-synced-{{ res.name }}
 {% endif %}
