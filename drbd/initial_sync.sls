@@ -52,7 +52,7 @@ init-promote-{{ res.name }}:
 init-sleep-{{ res.name }}-promote:
   module.run:
     - test.sleep:
-      - length: 3
+      - length: 1
     - require:
       - init-sleep-drbd-start
 {% endif %}
@@ -77,7 +77,7 @@ init-wait-for-{{ res.name }}-synced:
 init-sleep-to-wait-all-synced-{{ res.name }}:
   module.run:
     - test.sleep:
-      - length: {{ drbd.sync_interval + 60 }}
+      - length: {{ drbd.sync_interval + 5 }}
     - require:
       - init-wait-for-{{ res.name }}-synced
 
