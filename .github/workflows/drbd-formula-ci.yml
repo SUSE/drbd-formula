@@ -1,0 +1,69 @@
+name: Formula CI
+# this workflow will
+# - deliver the package content to the configured repository
+# - submit the new package content to the upstream repository
+on: [push, pull_request]
+env:
+  PACKAGE_NAME: saphanabootstrap-formula 
+jobs:
+
+  delivery:
+    needs: validation
+    runs-on: ubuntu-18.04
+#    if: ${{ github.event_name != 'pull_request' }}  
+    container: 
+      image: shap/continuous_deliver
+      env:
+          OBS_USER: ${{ secrets.OBS_USER }}
+          OBS_PASS: ${{ secrets.OBS_PASS }}
+          OBS_PROJECT: ${{ secrets.OBS_PROJECT }}
+          FOLDER: ${{ secrets.FOLDER}}
+          PACKAGE_NAME: drbd-formula
+    steps:
+    - uses: actions/checkout@v2 
+      with:
+        fetch-depth: 0
+    - name: configure OSC  
+    # OSC credentials must be configured beforehand as the HOME variables cannot be changed from /github/home
+    # that is used to run osc commands 
+      run: | 
+        /scripts/init_osc_creds.sh
+        mkdir -p $HOME/.config/osc
+        cp /root/.config/osc/oscrc $HOME/.config/osc
+    - name: deliver package
+      run: |
+          docker run -t -v "$(pwd):/package" -w /package \
+          -e OBS_USER -e OBS_PASS -e FOLDER -e OBS_PROJECT -e PACKAGE_NAME \
+          shap/continuous_deliver \
+          /bin/bash -c "sed -i 's~%%VERSION%%~$TRAVIS_COMMIT~' _service && \
+          sed -i 's~%%REPOSITORY%%~$TRAVIS_REPO_SLUG~' _service && \
+          /scripts/upload.sh"
+
+
+
+
+  submit:
+    needs: [validation, delivery]
+    runs-on: ubuntu-18.04
+ #   if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/master' }}    
+    container:
+      image: shap/continuous_deliver
+      env:
+        OBS_USER: ${{ secrets.OBS_USER }}
+        OBS_PASS: ${{ secrets.OBS_PASS }}
+        OBS_PROJECT: ${{ secrets.OBS_PROJECT}}
+        PACKAGE_NAME: drbd-formula
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: configure OSC
+      run: | 
+        /scripts/init_osc_creds.sh
+        mkdir -p $HOME/.config/osc
+        cp /root/.config/osc/oscrc $HOME/.config/osc
+    - name: submit package
+      run: |
+       docker run -t -v "$(pwd):/package" -w /package \
+       -e OBS_USER -e OBS_PASS -e OBS_PROJECT -e PACKAGE_NAME -e TARGET_PROJECT shap/continuous_deliver \
+       /scripts/submit.sh
