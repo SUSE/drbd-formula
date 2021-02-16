@@ -1,9 +1,9 @@
-drbd-formula
-===========
+![Formula CI](https://github.com/SUSE/drbd-formula/drbd-formula/workflows/Formula%20CI/badge.svg)
 
-[![Travis Build](https://api.travis-ci.org/SUSE/drbd-formula.svg?branch=master)](https://travis-ci.org/SUSE/drbd-formula)
+# drbd-formula
 
 # Version
+
 0.3.9
 
 # DRBD bootstrap salt formula
@@ -30,7 +30,7 @@ sudo cp salt-shaptools/salt/states/* /srv/salt/_states
 ```
 
 2. Work with [HABOOTSTRAP formula](https://github.com/SUSE/habootstrap-formula) or [NFS formula](https://github.com/saltstack-formulas/nfs-formula), could deploy NFS on top of DRBD with/without Pacemaker
-> [NFS formula is packaged](https://build.opensuse.org/package/show/network:ha-clustering:Unstable/nfs-formula) in openSUSE build service
+   > [NFS formula is packaged](https://build.opensuse.org/package/show/network:ha-clustering:Unstable/nfs-formula) in openSUSE build service
 
 ## Install (Suse distros)
 
@@ -44,74 +44,59 @@ sudo zypper ref
 sudo zypper in drbd-formula
 ```
 
-
-Available states
-================
+# Available states
 
 .. contents::
-    :local:
+:local:
 
-``DRBD``
----------------
+## `DRBD`
 
 A full set for load kernel module, write configuration files, initialize resources.
 
-``drbd.drbd_kmod``
----------------
+## `drbd.drbd_kmod`
 
 Load the DRBD kernel module.
 
-``drbd.global_confs``
----------------
+## `drbd.global_confs`
 
 Configure DRBD global configuration file `/etc/drbd.d/global_common.conf` and `/etc/drbd.conf`.
 
-``drbd.res``
----------------
+## `drbd.res`
 
 Configure the DRBD resource configuration files in `/etc/drbd.d/*.res`.
 
-``drbd.create``
----------------
+## `drbd.create`
 
 Create the metadata of all resources, do nothing if existed.
 
-``drbd.createmd_force``
----------------
+## `drbd.createmd_force`
 
 Call the DRBD salt module directly to `force` create metadata of all resources.
 
-``drbd.initial_sync``
----------------
+## `drbd.initial_sync`
 
 Create the metadata of all resources and run an initialize sync.
 
-``drbd.start``
----------------
+## `drbd.start`
 
 Start all DRBD resources.
 
-``drbd.stop``
----------------
+## `drbd.stop`
 
 Stop all DRBD resources.
 
-``drbd.promote``
----------------
+## `drbd.promote`
 
 Premote all DRBD resources.
 
-``drbd.demote``
----------------
+## `drbd.demote`
 
 Demote all DRBD resources.
 
-``drbd.wait_sync``
----------------
+## `drbd.wait_sync`
 
 Waiting all DRBD resources finish syncing.
 
-``drbd.nfs_ready``
----------------
+## `drbd.nfs_ready`
 
 Format the backing device and get mounted.
