@@ -12,7 +12,9 @@
     - defaults:
         name: '{{ res.name }}'
         device: '{{ res.device }}'
+{% if res.disk is defined %}
         disk: '{{ res.disk }}'
+{% endif %}
 
         meta_disk: '{{ res.meta_disk|default("internal") }}'
         protocol:  '{{ res.protocol|default("C") }}'

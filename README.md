@@ -4,7 +4,7 @@
 
 # Version
 
-0.3.9
+0.4.1
 
 # DRBD bootstrap salt formula
 
