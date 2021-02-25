@@ -1,4 +1,4 @@
-![Formula CI](https://github.com/SUSE/drbd-formula/drbd-formula/workflows/Formula%20CI/badge.svg)
+[![Formula CI](https://github.com/SUSE/drbd-formula/actions/workflows/drbd-formula-ci.yml/badge.svg)](https://github.com/SUSEyy/drbd-formula/actions/workflows/drbd-formula-ci.yml)
 
 # drbd-formula
 
