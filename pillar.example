@@ -82,6 +82,7 @@ drbd:
   #    # Define the device name and minor number of a replicated block device.
   #    device: "/dev/drbd8"
   #    # Define the lower-level block device that DRBD will use for storing the actual data.
+  #    # Also support configure disk in nodes section for different device per node.
   #    disk: "/dev/vdb1"
   #    # Optional: Define where the metadata of a replicated block device resides.
   #    meta_disk: "internal"
@@ -112,6 +113,7 @@ drbd:
   #    nodes:
   #      # Node name
   #      - name: "drbd-node1"
+  #        # disk is optional if config in resource section
   #        # Node IP address
   #        ip: "192.168.10.101"
   #        # Node port
@@ -120,6 +122,7 @@ drbd:
   #        id: 1
   #      # Node name
   #      - name: "drbd-node2"
+  #        # disk is optional if config in resource section
   #        # Node IP address
   #        ip: "192.168.10.102"
   #        # Node port

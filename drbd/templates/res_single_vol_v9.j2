@@ -1,7 +1,9 @@
 resource {{ name }} {
    device    {{ device }};
-   disk      {{ disk }};
    meta-disk {{ meta_disk }};
+{%- if disk is defined %}
+   disk {{ disk }};
+{%- endif %}
    net {
       protocol	{{ protocol }};
       ping-timeout {{ ping_timeout }};
@@ -27,6 +29,9 @@ resource {{ name }} {
 {% for node in nodes -%}
 {{ "   on " ~ node.name }} {
       address   {{ node.ip ~ ":" ~ node.port }};
+{%- if node.disk is defined %}
+      disk      {{ node.disk }};
+{%- endif %}
       node-id   {{ node.id }};
    }
 {% endfor -%}
