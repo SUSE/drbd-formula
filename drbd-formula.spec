@@ -1,7 +1,7 @@
 #
 # spec file for package drbd-formula
 #
-# Copyright (c) 2019 SUSE LLC
+# Copyright (c) 2021 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -16,8 +16,10 @@
 #
 
 
+%define fname drbd
+%define fdir %{_datadir}/salt-formulas
+%define ftemplates templates
 # See also https://en.opensuse.org/openSUSE:Specfile_guidelines
-
 Name:           drbd-formula
 Version:        0
 Release:        0
@@ -27,17 +29,12 @@ URL:            https://github.com/SUSE/%{name}
 Source0:        %{name}-%{version}.tar.gz
 Requires:       drbd-utils
 Requires:       salt-shaptools >= 0.2.9
+BuildArch:      noarch
 %if 0%{?suse_version} < 1500
 Recommends:     salt-formulas-configuration
 %else
 Requires:       salt-formulas-configuration
 %endif
-BuildArch:      noarch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-
-%define fname drbd
-%define fdir %{_datadir}/salt-formulas
-%define ftemplates templates
 
 %description
 DRBD deployment salt formula
@@ -60,9 +57,9 @@ cp -R examples %{buildroot}%{fdir}/states/%{fname}/%{ftemplates}/
 cp -R form.yml metadata.yml pillar.example README.md %{buildroot}%{fdir}/metadata/%{fname}
 
 %files
-%defattr(-,root,root,-)
 %if 0%{?sle_version} < 120300
-%doc README.md LICENSE
+%license LICENSE
+%doc README.md
 %else
 %doc README.md
 %license LICENSE
