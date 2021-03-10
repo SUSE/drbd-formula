@@ -53,17 +53,12 @@ module, which can be added running the `SUSEConnect -p sle-module-adv-systems-ma
 mkdir -p %{buildroot}%{fdir}/states/%{fname}
 mkdir -p %{buildroot}%{fdir}/metadata/%{fname}
 cp -R %{fname} %{buildroot}%{fdir}/states
-cp -R examples %{buildroot}%{fdir}/states/%{fname}/%{ftemplates}/
+cp -R templates %{buildroot}%{fdir}/states/%{fname}/%{ftemplates}/
 cp -R form.yml metadata.yml pillar.example README.md %{buildroot}%{fdir}/metadata/%{fname}
 
 %files
-%if 0%{?sle_version} < 120300
-%license LICENSE
-%doc README.md
-%else
 %doc README.md
 %license LICENSE
-%endif
 
 %dir %attr(0755, root, salt) %{fdir}
 %dir %attr(0755, root, salt) %{fdir}/states
