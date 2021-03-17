@@ -18,7 +18,6 @@
 
 %define fname drbd
 %define fdir %{_datadir}/salt-formulas
-%define ftemplates templates
 # See also https://en.opensuse.org/openSUSE:Specfile_guidelines
 Name:           drbd-formula
 Version:        0
@@ -53,7 +52,7 @@ module, which can be added running the `SUSEConnect -p sle-module-adv-systems-ma
 mkdir -p %{buildroot}%{fdir}/states/%{fname}
 mkdir -p %{buildroot}%{fdir}/metadata/%{fname}
 cp -R %{fname} %{buildroot}%{fdir}/states
-cp -R templates %{buildroot}%{fdir}/states/%{fname}/%{ftemplates}/
+cp -R templates %{buildroot}%{fdir}/states/%{fname}
 cp -R form.yml metadata.yml pillar.example README.md %{buildroot}%{fdir}/metadata/%{fname}
 
 %files
@@ -65,7 +64,7 @@ cp -R form.yml metadata.yml pillar.example README.md %{buildroot}%{fdir}/metadat
 %dir %attr(0755, root, salt) %{fdir}/metadata
 
 %attr(0755, root, salt) %{fdir}/states/%{fname}
-%attr(0755, root, salt) %{fdir}/states/%{fname}/%{ftemplates}
+%attr(0755, root, salt) %{fdir}/states/%{fname}/templates
 %attr(0755, root, salt) %{fdir}/metadata/%{fname}
 
 %changelog
