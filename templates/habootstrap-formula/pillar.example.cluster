@@ -16,7 +16,7 @@ cluster:
   configure:
     method: 'update'
     template:
-      source: /tmp/drbd_with_nfs_crm.j2
+      source: /tmp/cluster_resources_nfs.j2
       parameters:
         virtual_ip: 192.168.10.200
         virtual_ip_mask: 24

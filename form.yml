@@ -240,13 +240,13 @@ drbd:
         $type: boolean
         $default: true
 
-      resync_rate: 
+      resync_rate:
         $visibleIf: .fixed_rate == true
         $name: Fixed sync rate
         $optional: true
         $default: "150M"
 
-      c_plan_ahead: 
+      c_plan_ahead:
         $visibleIf: .fixed_rate == false
         $name: C plan ahead
         $help: Dynamically control the resync speed
@@ -254,7 +254,7 @@ drbd:
         $type: number
         $default: 20
 
-      c_max_rate: 
+      c_max_rate:
         $visibleIf: .fixed_rate == false
         $name: C max rate
         $help: Max rate of dynamically resync rate
