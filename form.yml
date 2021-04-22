@@ -273,7 +273,7 @@ drbd:
 # https://www.suse.com/documentation/suse-manager-4/4.0/suse-manager/salt/salt-formulas.html
       file_system:
         $name: File system
-        $help: salt format the disk after initialize
+        $help: salt format the disk after initialize, required when "need_format" enabled
         $optional: true
         $type: select
         $values:
