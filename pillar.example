@@ -102,7 +102,7 @@ drbd:
   #    # Optional: Fill the buffers along the data path with a defined amount of data.
   #    c_fill_target: "10M"
 
-  #    # Optional: (salt) format the disk after initialize
+  #    # Optional: (salt) format the disk after initialize, required when "need_format" enabled
   #    file_system: "xfs"
   #    # Optional: (salt) default mount point of the resource
   #    mount_point: "/mnt/test1"
@@ -158,7 +158,7 @@ drbd:
   #    # Optional: Define how much bandwidth DRBD may use for resynchronizing.
   #    resync_rate: "150M"
 
-  #    # Optional: (salt) format the disk after initialize
+  #    # Optional: (salt) format the disk after initialize, required when "need_format" enabled
   #    file_system: "ext4"
   #    # Optional: (salt) default mount point of the resource
   #    mount_point: "/mnt/test2"
