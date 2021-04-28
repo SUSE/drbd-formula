@@ -44,6 +44,12 @@ sudo zypper ref
 sudo zypper in drbd-formula
 ```
 
+> Note  
+> In some cases it might be needed to adjust the salt minion configuration to 
+use the new style of calling `module.run`.
+See [this](https://docs.saltproject.io/en/latest/ref/states/all/salt.states.module.html)
+for more information.
+
 # Available states
 
 .. contents::
