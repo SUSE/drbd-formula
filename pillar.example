@@ -52,6 +52,12 @@ drbd:
   #  net:
   #    # Optional: you may assign the primary role to both nodes.
   #    multi_primaries: "no"
+  #    # Optional: Maximal number of buffer pages allocated. Max: 128k
+  #    max_buffers: 2048
+  #    # Optional: The socket send buffer to store packets. Max: 10M
+  #    sndbuf_size: 0
+  #    # Optional: Packets received are stored in socket buffer. Max: 10M
+  #    rcvbuf_size: 0
   #    # Optional: preventive measures to avoid situations where both nodes are primary and disconnected(AKA split brain)
   #    fencing: "resource-and-stonith"
   #    # Optional: split brain handler when no primary
@@ -97,10 +103,14 @@ drbd:
   #    fixed_rate:  false
   #    # Optional: Dynamically control the resync speed.
   #    c_plan_ahead: 20
-  #    # Optional: Max rate of dynamically resync rate.
-  #    c_max_rate: "100M"
+  #    # Optional: A constant delay time
+  #    c_delay_target: 1
   #    # Optional: Fill the buffers along the data path with a defined amount of data.
   #    c_fill_target: "10M"
+  #    # Optional: Max rate of dynamically resync rate.
+  #    c_max_rate: "100M"
+  #    # Optional: Throttle the resync when device is busy.
+  #    c_min_rate: "4M"
 
   #    # Optional: (salt) format the disk after initialize, required when "need_format" enabled
   #    file_system: "xfs"

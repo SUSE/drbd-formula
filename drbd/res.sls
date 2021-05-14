@@ -24,8 +24,10 @@
         fixed_rate: {{ res.fixed_rate|default(True) }}
         resync_rate: '{{ res.resync_rate|default("100M") }}'
         c_plan_ahead: {{ res.c_plan_ahead|default(20) }}
-        c_max_rate: '{{ res.c_max_rate|default("100M") }}'
+        c_delay_target: '{{ res.c_delay_target|default(1) }}'
         c_fill_target: '{{ res.c_fill_target|default("10M") }}'
+        c_max_rate: '{{ res.c_max_rate|default("100M") }}'
+        c_min_rate: '{{ res.c_min_rate|default("4M") }}'
 
         # To concate string with number, need to use join. Like
         # name: '{{ ["drbd-node", loop.index + 1]|join('') }}'

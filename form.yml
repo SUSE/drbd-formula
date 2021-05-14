@@ -113,6 +113,27 @@ drbd:
            - "yes"
         $default: "no"
 
+      max_buffers:
+        $visibleIf: .fixed_rate == false
+        $name:  MAX buffers
+        $help:  Maximal number of buffer pages allocated. Max: 128k
+        $optional: true
+        $default: 2048
+
+      sndbuf_size:
+        $visibleIf: .fixed_rate == false
+        $name:  Send buffer size
+        $help:  The socket send buffer to store packets. Max: 10M
+        $optional: true
+        $default: 0
+
+      rcvbuf_size:
+        $visibleIf: .fixed_rate == false
+        $name:  Receive buffer size
+        $help:  Packets received are stored in socket buffer. Max: 10M
+        $optional: true
+        $default: 0
+
       fencing:
         $optional: true
         $type: select
@@ -254,12 +275,13 @@ drbd:
         $type: number
         $default: 20
 
-      c_max_rate:
+      c_delay_target:
         $visibleIf: .fixed_rate == false
-        $name: C max rate
-        $help: Max rate of dynamically resync rate
+        $name: C delay target
+        $help: A constant delay time
         $optional: true
-        $default: "100M"
+        $type: number
+        $default: 1
 
       c_fill_target:
         $visibleIf: .fixed_rate == false
@@ -267,6 +289,20 @@ drbd:
         $help: Fill the buffers along the data path with a defined amount of data
         $optional: true
         $default: "10M"
+
+      c_max_rate:
+        $visibleIf: .fixed_rate == false
+        $name: C max rate
+        $help: Max rate of dynamically resync rate
+        $optional: true
+        $default: "100M"
+
+      c_min_rate:
+        $visibleIf: .fixed_rate == false
+        $name: C min rate
+        $help: Throttle the resync when device is busy
+        $optional: true
+        $default: "4M"
 
 # FIXME: drbd$need_format is not working.
 # http://docserv.nue.suse.com/documents/SUSE_Manager_develop/susemanager-best-practices/single-html/

@@ -81,6 +81,15 @@ common {
 {%- if multi_primaries %}
                 allow-two-primaries {{ multi_primaries }};
 {%- endif %}
+{%- if max_buffers %}
+                max-buffers {{ max_buffers }};
+{%- endif %}
+{%- if sndbuf_size %}
+                sndbuf-size {{ sndbuf_size }};
+{%- endif %}
+{%- if rcvbuf_size %}
+                rcvbuf-size {{ rcvbuf_size }};
+{%- endif %}
 {%- if fencing %}
                 fencing {{ fencing }};
 {%- endif %}

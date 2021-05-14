@@ -20,6 +20,9 @@ drbd:
       quorum: "off"
     net:
       multi_primaries: ""
+      max_buffers: ""
+      sndbuf_size: ""
+      rcvbuf_size: ""
       fencing: ""
       after_sb_0pri: ""
       after_sb_1pri: ""

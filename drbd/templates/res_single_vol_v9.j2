@@ -15,8 +15,10 @@ resource {{ name }} {
       c-plan-ahead	0;
 {%- else %}
       c-plan-ahead	{{ c_plan_ahead }};
-      c-max-rate	{{ c_max_rate }};
+      c-delay-target	{{ c_delay_target }};
       c-fill-target	{{ c_fill_target }};
+      c-max-rate	{{ c_max_rate }};
+      c-min-rate	{{ c_min_rate }};
 {%- endif %}
    }
    connection-mesh {
