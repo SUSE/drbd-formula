@@ -25,6 +25,9 @@
         quorum: "off"
         multi_primaries: "no"
         fencing: "resource-and-stonith"
+        max_buffers: 2048
+        sndbuf_size: 0
+        rcvbuf_size: 0
         after_sb_0pri: "discard-zero-changes"
         after_sb_1pri: "discard-secondary"
         after_sb_2pri: "disconnect"
@@ -39,6 +42,9 @@
         dialog_refresh: {{ drbd.global.dialog_refresh }}
         quorum: "{{ drbd.common.options.quorum }}"
         multi_primaries: "{{ drbd.common.net.multi_primaries }}"
+        max_buffers: "{{ drbd.common.net.max_buffers }}"
+        sndbuf_size: "{{ drbd.common.net.sndbuf_size }}"
+        rcvbuf_size: "{{ drbd.common.net.rcvbuf_size }}"
         fencing: "{{ drbd.common.net.fencing }}"
         after_sb_0pri: "{{ drbd.common.net.after_sb_0pri }}"
         after_sb_1pri: "{{ drbd.common.net.after_sb_1pri }}"
