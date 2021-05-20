@@ -42,9 +42,9 @@
         dialog_refresh: {{ drbd.global.dialog_refresh }}
         quorum: "{{ drbd.common.options.quorum }}"
         multi_primaries: "{{ drbd.common.net.multi_primaries }}"
-        max_buffers: "{{ drbd.common.net.max_buffers}}"
-        sndbuf_size: "{{ drbd.common.net.sndbuf_size}}"
-        rcvbuf_size: "{{ drbd.common.net.rcvbuf_size}}"
+        max_buffers: "{{ drbd.common.net.max_buffers }}"
+        sndbuf_size: "{{ drbd.common.net.sndbuf_size }}"
+        rcvbuf_size: "{{ drbd.common.net.rcvbuf_size }}"
         fencing: "{{ drbd.common.net.fencing }}"
         after_sb_0pri: "{{ drbd.common.net.after_sb_0pri }}"
         after_sb_1pri: "{{ drbd.common.net.after_sb_1pri }}"
