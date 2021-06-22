@@ -57,7 +57,6 @@ primitive vip_{{ res.name }}_nfs IPaddr2 \
 {%- if native_fencing %}
 property $id="cib-bootstrap-options" \
     stonith-enabled="true" \
-    stonith-action="off" \
     concurrent-fencing=true
 
 primitive rsc_azure_stonith_{{ res.name }}_nfs stonith:fence_azure_arm \
