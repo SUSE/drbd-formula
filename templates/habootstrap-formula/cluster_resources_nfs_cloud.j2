@@ -119,8 +119,6 @@ group g-nfs_{{ res.name }} fs_{{ res.name }} vip_{{ res.name }}_nfs exportfs_wor
 
 order o_drbd_{{ res.name }}-before-fs_{{ res.name }} \
   ms_{{ res.name }}:promote g-nfs_{{ res.name }}:start
-
 colocation c_fs_{{ res.name }}-with_drbd_{{ res.name }} \
-  inf: g-nfs_{{ res.name }} ms_{{ res.name }}:Master\
-
+  inf: g-nfs_{{ res.name }} ms_{{ res.name }}:Master
 {%- endfor %}
