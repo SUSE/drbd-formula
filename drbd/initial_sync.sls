@@ -4,7 +4,7 @@
 {% for res in drbd.resource %}
 {% if drbd.need_format is defined and drbd.need_format is sameas true%}
 {% if res.file_system == 'xfs' %}
-init_drbd_install_xfs:
+init_drbd_install_xfs-{{ res.name }}:
   pkg.installed:
     - pkgs:
       - xfsprogs
