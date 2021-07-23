@@ -8,7 +8,7 @@ drbd:
   ## Configure DRBD in pacemaker cluster
   #with_ha: false
 
-  ## Pirmary node when promoting DRBD
+  ## Primary node when promoting DRBD
   ## TODO: Only support single primary currently
   promotion: "drbd-node1"
 
