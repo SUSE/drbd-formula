@@ -1,6 +1,6 @@
 {%- set data = pillar.cluster.configure.template.parameters %}
 {%- set drbd = salt['pillar.get']('drbd', default={}, merge=True) %}
-{%- set nfsid = 1 %}
+{%- set nfsid = 10 %}
 
 #
 # defaults and production DRBD
@@ -21,36 +21,49 @@ clone cl-nfsserver nfsserver \
 
 # Need to edit drbd pillar file.
 {%- for res in drbd.resource %}
-primitive drbd-{{ res.name }} ocf:linbit:drbd \
+primitive rsc_drbd-{{ res.name }} ocf:linbit:drbd \
   params drbd_resource={{ res.name }} \
   op monitor interval=15 role=Master \
   op monitor interval=30 role=Slave
 
-ms ms_{{ res.name }} drbd-{{ res.name }} \
+ms ms_{{ res.name }} rsc_drbd-{{ res.name }} \
   meta master-max=1 master-node-max=1 \
   meta clone-max={{ res.nodes | length }} clone-node-max=1 \
   meta notify=true target-role=Started
 
-primitive fs_{{ res.name }} ocf:heartbeat:Filesystem \
+primitive rsc_fs_{{ res.name }} ocf:heartbeat:Filesystem \
   params device={{ res.device }} directory={{ res.mount_point }} fstype={{ res.file_system }} \
   options=noatime,nodiratime \
   op monitor interval="20" timeout="40s"
 
-primitive test-IP_{{ res.name }} IPaddr2 \
-        params ip={{ res.virtual_ip }}
-
-primitive exportfs_work_{{ res.name }} exportfs \
+primitive rsc_exportfs_{{ res.name }} exportfs \
   params directory={{ res.mount_point }} fsid={{ nfsid + loop.index0 }} \
   options="rw,no_root_squash" clientspec="*" wait_for_leasetime_on_stop=true \
   op monitor interval=30s
 
-group g-nfs_{{ res.name }} fs_{{ res.name }} test-IP_{{ res.name }} exportfs_work_{{ res.name }}
+{%- if res.virtual_ip is defined %}
+primitive rsc_vip_{{ res.name }} IPaddr2 \
+  params ip={{ res.virtual_ip }} \
+  op monitor interval=10 timeout=20
+{%- endif %}
 
 order o_drbd_{{ res.name }}-before-fs_{{ res.name }} \
-  ms_{{ res.name }}:promote g-nfs_{{ res.name }}:start
-colocation c_fs_{{ res.name }}-with_drbd_{{ res.name }} \
-  inf: g-nfs_{{ res.name }} ms_{{ res.name }}:Master
+  ms_{{ res.name }}:promote g_nfs:start
+colocation c_fs-with_drbd_{{ res.name }} \
+  inf: g_nfs ms_{{ res.name }}:Master
+
 {%- endfor %}
 
-primitive extra-IP IPaddr2 \
-        params ip={{ data.virtual_ip }}
+primitive rsc_vip_nfs IPaddr2 \
+  params ip={{ drbd.virtual_ip }} \
+  op monitor interval=10 timeout=20
+
+group g_nfs \
+{%- for res in drbd.resource %}
+    rsc_fs_{{ res.name }} \
+    rsc_exportfs_{{ res.name }} \
+{%- if res.virtual_ip is defined %}
+    rsc_vip_{{ res.name }} \
+{%- endif %}
+{%- endfor %}
+    rsc_vip_nfs

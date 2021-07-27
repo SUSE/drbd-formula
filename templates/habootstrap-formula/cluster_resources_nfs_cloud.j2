@@ -1,7 +1,7 @@
 {%- set data = pillar.cluster.configure.template.parameters %}
 {%- set cloud_provider = grains['cloud_provider'] %}
 {%- set drbd = salt['pillar.get']('drbd', default={}, merge=True) %}
-{%- set nfsid = 1 %}
+{%- set nfsid = 10 %}
 
 {%- if cloud_provider == "amazon-web-services" %}
 {%- set native_fencing = data.native_fencing|default(True) %}
@@ -31,29 +31,75 @@ clone cl-nfsserver nfsserver \
   meta interleave=true
 
 # Need to edit drbd pillar file.
+#
+# export specific resources
+#
 {%- for res in drbd.resource %}
-primitive drbd-{{ res.name }} ocf:linbit:drbd \
+primitive rsc_drbd-{{ res.name }} ocf:linbit:drbd \
   params drbd_resource={{ res.name }} \
   op monitor interval=15 role=Master \
   op monitor interval=30 role=Slave
 
-ms ms_{{ res.name }} drbd-{{ res.name }} \
+ms ms_{{ res.name }} rsc_drbd-{{ res.name }} \
   meta master-max=1 master-node-max=1 \
   meta clone-max={{ res.nodes | length }} clone-node-max=1 \
   meta notify=true target-role=Started
 
-primitive fs_{{ res.name }} ocf:heartbeat:Filesystem \
+primitive rsc_fs_{{ res.name }} ocf:heartbeat:Filesystem \
   params device={{ res.device }} directory={{ res.mount_point }} fstype={{ res.file_system }} \
   options=noatime,nodiratime \
   op monitor interval="20" timeout="40s"
 
+primitive rsc_exportfs_{{ res.name }} exportfs \
+  params directory={{ res.mount_point }} fsid={{ nfsid + loop.index0 }} \
+  options="rw,no_root_squash" clientspec="*" wait_for_leasetime_on_stop=true \
+  op monitor interval=30s
+
+{%- if res.virtual_ip is defined %}
 {%- if cloud_provider not in ["amazon-web-services", "google-cloud-platform"] %}
 {%- set cidr_netmask = "cidr_netmask="~data.virtual_ip_mask|default("32") %}
 {%- set nic = "nic="~pillar.cluster.interface|json if pillar.cluster.interface is defined else "" %}
 
-primitive vip_{{ res.name }}_nfs IPaddr2 \
+primitive rsc_vip_{{ res.name }} IPaddr2 \
   params ip={{ res.virtual_ip }} {{ cidr_netmask }} {{ nic }} \
   op monitor interval=10 timeout=20
+{%- endif %}
+
+{%- if cloud_provider == "google-cloud-platform" %}
+primitive rsc_vip_nfs ocf:heartbeat:gcp-vpc-move-route \
+  params ip={{ res.virtual_ip }} vpc_network={{ data.vpc_network_name }} route_name={{ data.route_name }} \
+  op start interval=0 timeout=180 \
+  op stop interval=0 timeout=180 \
+  op monitor interval=60 timeout=60
+{%- elif cloud_provider == "amazon-web-services" %}
+primitive rsc_vip_nfs ocf:suse:aws-vpc-move-ip \
+  params ip={{ res.virtual_ip }} routing_table={{ data.route_table }} \
+  interface={{ pillar.cluster.interface|default('eth0')|json }} profile={{ data.cluster_profile }} \
+  op start interval=0 timeout=180 \
+  op stop interval=0 timeout=180 \
+  op monitor interval=60 timeout=60
+{%- endif %}
+
+{%- endif %}
+
+order o_drbd_{{ res.name }}-before-fs_{{ res.name }} \
+  ms_{{ res.name }}:promote g_nfs:start
+colocation c_fs-with_drbd_{{ res.name }} \
+  inf: g_nfs ms_{{ res.name }}:Master
+
+{%- endfor %}
+
+#
+# global resources
+#
+{%- if cloud_provider not in ["amazon-web-services", "google-cloud-platform"] %}
+{%- set cidr_netmask = "cidr_netmask="~data.virtual_ip_mask|default("32") %}
+{%- set nic = "nic="~pillar.cluster.interface|json if pillar.cluster.interface is defined else "" %}
+
+primitive rsc_vip_nfs IPaddr2 \
+  params ip={{ drbd.virtual_ip }} {{ cidr_netmask }} {{ nic }} \
+  op monitor interval=10 timeout=20
+{%- endif %}
 
 {%- if cloud_provider == "microsoft-azure" %}
 {%- if native_fencing %}
@@ -61,26 +107,24 @@ property $id="cib-bootstrap-options" \
     stonith-enabled="true" \
     concurrent-fencing=true
 
-primitive rsc_azure_stonith_{{ res.name }}_nfs stonith:fence_azure_arm \
+primitive rsc_azure_stonith stonith:fence_azure_arm \
     params subscriptionId={{ data.azure_subscription_id }} resourceGroup={{ data.azure_resource_group_name }} tenantId={{ data.azure_tenant_id }} login={{ data.azure_fence_agent_app_id }} passwd="{{ data.azure_fence_agent_client_secret }}" pcmk_monitor_retries=4 pcmk_action_limit=3 power_timeout=240 pcmk_reboot_timeout=900 \
     op monitor interval=3600 timeout=120 \
     meta target-role=Started
 {%- endif %}
-primitive rsc_socat_{{ res.name }}_nfs azure-lb \
+primitive rsc_socat_nfs azure-lb \
   params port={{ data.probe }} \
   op monitor timeout=20s interval=10 depth=0
 
-{%- endif %}
-
 {%- elif cloud_provider == "google-cloud-platform" %}
 {%- if native_fencing %}
-primitive rsc_gcp_stonith_{{ res.name }}_{{ grains['host'] }} stonith:fence_gce \
+primitive rsc_gcp_stonith_{{ grains['host'] }} stonith:fence_gce \
   params plug={{ grains['gcp_instance_name'] }} pcmk_host_map="{{ grains['host'] }}:{{ grains['gcp_instance_name'] }}" \
   meta target-role=Started
 {%- endif %}
 
-primitive vip_{{ res.name }}_nfs ocf:heartbeat:gcp-vpc-move-route \
-  params ip={{ data.virtual_ip }} vpc_network={{ data.vpc_network_name }} route_name={{ data.route_name }} \
+primitive rsc_vip_nfs ocf:heartbeat:gcp-vpc-move-route \
+  params ip={{ drbd.virtual_ip }} vpc_network={{ data.vpc_network_name }} route_name={{ data.route_name }} \
   op start interval=0 timeout=180 \
   op stop interval=0 timeout=180 \
   op monitor interval=60 timeout=60
@@ -93,7 +137,7 @@ property $id="cib-bootstrap-options" \
     stonith-action="off" \
     stonith-timeout="150s"
 
-primitive rsc_aws_stonith_{{ res.name }}_nfs stonith:external/ec2 \
+primitive rsc_aws_stonith_nfs stonith:external/ec2 \
     params tag={{ data.instance_tag }} profile={{ data.cluster_profile }} \
     op start interval=0 timeout=180 \
     op stop interval=0 timeout=180 \
@@ -101,8 +145,8 @@ primitive rsc_aws_stonith_{{ res.name }}_nfs stonith:external/ec2 \
     meta target-role=Started
 {%- endif %}
 
-primitive vip_{{ res.name }}_nfs ocf:suse:aws-vpc-move-ip \
-    params ip={{ data.virtual_ip }} routing_table={{ data.route_table }} \
+primitive rsc_vip_nfs ocf:suse:aws-vpc-move-ip \
+    params ip={{ drbd.virtual_ip }} routing_table={{ data.route_table }} \
     interface={{ pillar.cluster.interface|default('eth0')|json }} profile={{ data.cluster_profile }} \
     op start interval=0 timeout=180 \
     op stop interval=0 timeout=180 \
@@ -110,15 +154,13 @@ primitive vip_{{ res.name }}_nfs ocf:suse:aws-vpc-move-ip \
 
 {%- endif %}
 
-primitive exportfs_work_{{ res.name }} exportfs \
-  params directory={{ res.mount_point }} fsid={{ nfsid + loop.index0 }} \
-  options="rw,no_root_squash" clientspec="*" wait_for_leasetime_on_stop=true \
-  op monitor interval=30s
-
-group g-nfs_{{ res.name }} fs_{{ res.name }} vip_{{ res.name }}_nfs exportfs_work_{{ res.name }} {% if cloud_provider == "microsoft-azure" %} rsc_socat_{{ res.name }}_nfs {% endif %}
-
-order o_drbd_{{ res.name }}-before-fs_{{ res.name }} \
-  ms_{{ res.name }}:promote g-nfs_{{ res.name }}:start
-colocation c_fs_{{ res.name }}-with_drbd_{{ res.name }} \
-  inf: g-nfs_{{ res.name }} ms_{{ res.name }}:Master
+group g_nfs \
+{%- for res in drbd.resource %}
+    rsc_fs_{{ res.name }} \
+    rsc_exportfs_{{ res.name }} \
+{%- if res.virtual_ip is defined %}
+    rsc_vip_{{ res.name }} \
+{%- endif %}
 {%- endfor %}
+    {% if cloud_provider == "microsoft-azure" %} rsc_socat_nfs \ {% endif %}
+    rsc_vip_nfs

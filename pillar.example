@@ -12,6 +12,9 @@ drbd:
   ## TODO: Only support single primary currently
   promotion: "drbd-node1"
 
+  ## Virtual IP for the NFS group
+  virtual_ip: "192.168.10.200"
+
   ## Resource template for /etc/drbd.d/xxx.res
   #res_template: "res_single_vol_v9.j2"
 

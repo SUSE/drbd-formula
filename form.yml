@@ -13,6 +13,11 @@ drbd:
     $help: whether need to install SLE HA related packages
     $default: false
 
+  virtual_ip:
+    $name: Virtual IP
+    $help: Virtual IP for NFS service
+    $optional: false
+
   promotion:
     $name: Primary node when promoting DRBD
     $help: Choose a node to become the first primary
